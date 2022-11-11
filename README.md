@@ -1,5 +1,3 @@
+# Internet Christmas Tree!
 
-# Reddit Place Clone
-React & Firebase Realtime
-
-![enter image description here](https://i.ibb.co/QHQDrKM/image.png)
+Used [Reddit Place Clone](https://github.com/dovenokan/reddit-place-clone) by dovenokan as a starting point! Thanks!

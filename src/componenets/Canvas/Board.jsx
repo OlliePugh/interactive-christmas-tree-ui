@@ -33,7 +33,7 @@ function Board({userData}) {
         const dbRef = ref(realtime, "board")
         onValue(dbRef, (snapshot) => {
             const data = Object.values(snapshot.val())
-            setColorMap(data)
+            setColorMap(data);
             setLoading(false) 
         });
     }
