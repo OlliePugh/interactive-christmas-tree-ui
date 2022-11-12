@@ -1,4 +1,5 @@
 import { ref, onValue, set, get } from "firebase/database";
+import { httpsCallable } from "firebase/functions";
 
 function ListenData(db, path) {
   const dbRef = ref(db, path);
@@ -19,8 +20,19 @@ function ReadOnce(db, path) {
   });
 }
 
-function WriteData(db, path, data) {
-  set(ref(db, path), data);
+async function WriteData(functions, data) {
+  const changeSquare = httpsCallable(functions, "changeSquare");
+  const result = await changeSquare(data);
+  console.log(result);
+  // set(ref(db, path), data);
 }
 
-export { ListenData, ReadOnce, WriteData };
+async function resetBoard(functions, data) {
+  const resetBoardFunction = httpsCallable(functions, "resetBoard");
+  console.log(resetBoardFunction);
+
+  const result = await resetBoardFunction(data);
+  console.log(result);
+}
+
+export { ListenData, ReadOnce, WriteData, resetBoard };

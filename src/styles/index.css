@@ -1,26 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Microbe&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Microbe&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Press Start 2P', cursive;
+  font-family: "Press Start 2P", cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
   font-size: 12px;
 }
 
-:root{
+:root {
   --squareBgColor: #ff4500;
   --textColor: whitesmoke;
 }
 
-.Container{
+.Container {
   display: grid;
   place-items: center;
   height: 100vh;
@@ -28,48 +28,48 @@ body {
   background-color: rgb(4, 49, 126);
 }
 
-.Board{
+.Board {
   width: 100vw;
   height: 100vh;
   margin-top: 10vh;
 }
 
 /* Canvas */
-.Canvas{
+.Canvas {
   width: 90vh;
   height: 90vh;
   display: grid;
   margin: 0 auto;
-  grid-template-columns: repeat(80,1fr);
-  grid-template-rows: repeat(80,1fr);
+  grid-template-columns: repeat(80, 1fr);
+  grid-template-rows: repeat(80, 1fr);
 }
 
 /* Loading */
-.Loading{
-  width:80vh;
-  height:80vh;
+.Loading {
+  width: 80vh;
+  height: 80vh;
   display: grid;
   place-items: center;
 }
-.Loading_Text{
+.Loading_Text {
   font-size: 2em;
   color: var(--textColor);
 }
 
 /* Square */
-.Square{
+.Square {
   border: 1px solid #07070714;
 }
-.Square:hover{
+.Square:hover {
   background-color: var(--squareBgColor) !important;
 }
 
-.Profile{
+.Profile {
   display: flex;
   flex-direction: row;
   gap: 10px;
   padding: 5px;
-  align-items: center;  
+  align-items: center;
   justify-content: center;
   color: var(--textColor);
 }
@@ -78,7 +78,7 @@ body {
   color: var(--textColor);
 }
 
-.Tools{
+.Tools {
   display: grid;
   place-items: center;
   position: sticky;
@@ -89,7 +89,7 @@ body {
   background-color: rgb(19, 78, 181);
 }
 
-.Auth-Button{
+.Auth-Button {
   border: none;
   color: var(--textColor);
   background-color: transparent;
@@ -100,16 +100,15 @@ body {
   cursor: pointer;
 }
 
-.Palette{
-  display:flex;
+.Palette {
+  display: flex;
   justify-content: center;
   padding: 5px;
 }
-.Palette-item{
+.Palette-item {
   margin: 2px;
   width: 15px;
   height: 15px;
   border: 1px solid rgb(24, 41, 136);
   border-radius: 50%;
 }
-

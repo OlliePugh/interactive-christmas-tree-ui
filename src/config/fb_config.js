@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { getFunctions } from "firebase/functions";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -18,31 +19,10 @@ const firebaseConfig = {
   measurementId: "G-NTKZ1RCW8N",
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyD_rqs-5yJBq_o9KaD--JWHwDa11iqdgdQ",
-//   authDomain: "place-firebase.firebaseapp.com",
-//   databaseURL:
-//     "https://place-firebase-default-rtdb.europe-west1.firebasedatabase.app",
-//   projectId: "place-firebase",
-//   storageBucket: "place-firebase.appspot.com",
-//   messagingSenderId: "1046026137375",
-//   appId: "1:1046026137375:web:5080272e083cc04af58a2a",
-// };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const realtime = getDatabase(app);
+export const functions = getFunctions(app, "europe-west1");
 export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export default realtime;
-
-// const firebaseApp = initializeApp({
-//   apiKey: "AIzaSyD_rqs-5yJBq_o9KaD--JWHwDa11iqdgdQ",
-//   authDomain: "place-firebase.firebaseapp.com",
-//   databaseURL: "https://place-firebase-default-rtdb.europe-west1.firebasedatabase.app",
-//   projectId: "place-firebase",
-//   storageBucket: "place-firebase.appspot.com",
-//   messagingSenderId: "1046026137375",
-//   appId: "1:1046026137375:web:5080272e083cc04af58a2a"
-// });
-//
