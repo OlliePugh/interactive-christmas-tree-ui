@@ -1,7 +1,5 @@
-const production = !(
+export const production = !(
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
 );
 
-export default {
-  production,
-};
+export const placementCooldown = 60_000;

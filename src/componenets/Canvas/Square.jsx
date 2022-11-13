@@ -3,7 +3,12 @@ import { ref, onValue } from "firebase/database";
 import realtime, { functions } from "../../config/fb_config";
 import { writeData } from "../../utils/fb_funcs";
 
-export default function Square({ boardId, id, currentColor }) {
+export default function Square({
+  boardId,
+  id,
+  currentColor,
+  placeCooldownCheck,
+}) {
   const [color, setColor] = useState("#ffffff");
 
   useEffect(() => {
@@ -14,6 +19,11 @@ export default function Square({ boardId, id, currentColor }) {
   }, []);
 
   const setColorWrapper = async () => {
+    if (!placeCooldownCheck()) {
+      // cooldown not finished
+      return;
+    }
+    setColor(currentColor);
     try {
       writeData(functions, {
         id,

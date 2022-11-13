@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable array-callback-return */
-import { useEffect, useState } from "react";
-import { ref, onValue } from "firebase/database";
-import { writeData, resetBoard } from "../../utils/fb_funcs";
+import { useEffect, useState, useRef } from "react";
+import { ref, get, child } from "firebase/database";
+import { resetBoard } from "../../utils/fb_funcs";
 import realtime, { functions } from "../../config/fb_config";
 import { colors } from "../../utils/palette";
 import Square from "./Square";
@@ -11,6 +9,7 @@ import {
   TransformWrapper,
   TransformComponent,
 } from "@tiendeo/react-zoom-pan-pinch";
+import { placementCooldown } from "../../config";
 
 function Board({ userData, boardId }) {
   // could use an array of refs here to have access to each squares value
@@ -20,31 +19,29 @@ function Board({ userData, boardId }) {
   });
   const [currentColor, setCurrentColor] = useState(colors.c1);
   const [loading, setLoading] = useState(true);
+  const lastPlacement = useRef(0);
 
   const initCanvas = async () => {
     await resetBoard(functions, { boardId: 1, width: 80, height: 80 });
   };
 
-  const canvasListener = () => {
-    // TODO make it listen per tile so that no need to stream entire board to the client
+  const canvasListener = async () => {
     const metaDataRef = ref(realtime, `board${boardId}/metadata`);
-    onValue(metaDataRef, (snapshot) => {
-      const { height, width } = snapshot.val();
-      setBoardDimensions({ boardHeight: height, boardWidth: width });
-      setLoading(false);
-    });
+    const result = await get(metaDataRef);
+    const { height, width } = result.val();
+    setBoardDimensions({ boardHeight: height, boardWidth: width });
+    setLoading(false);
   };
 
-  const updateSquare = async (id, color) => {
-    console.log(
-      await writeData(functions, {
-        id,
-        boardId,
-        color,
-        lastModifierEmail: userData.email,
-        lastModifierUID: userData.uid,
-      })
-    );
+  const placeCooldownCheck = () => {
+    const now = new Date().getTime();
+    if (now - lastPlacement.current > placementCooldown) {
+      lastPlacement.current = now;
+      return true;
+    } else {
+      console.log("not so fast");
+      return false;
+    }
   };
 
   const squareColorize = (color) => {
@@ -89,6 +86,7 @@ function Board({ userData, boardId }) {
                   key={i}
                   id={i}
                   currentColor={currentColor}
+                  placeCooldownCheck={placeCooldownCheck}
                 />
               );
             })}
