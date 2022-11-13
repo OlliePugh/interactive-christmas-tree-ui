@@ -4,18 +4,18 @@ import { auth } from "../../config/fb_config";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import Board from "../Canvas/Board";
 
-function Login() {
+const Login = () => {
   const [userData, setUserData] = useState(false);
   const provider = new GoogleAuthProvider();
 
-  function SignIn() {
+  const signInWrapper = () => {
     signInWithPopup(auth, provider).then((result) => {
       setUserData(result.user);
     });
   }
 
-  function SignOut() {
-    signOut(auth, provider).then((result) => {
+  const signOutWrapper = () => {
+    signOut(auth, provider).then((_) => {
       setUserData(false);
     });
   }
@@ -31,13 +31,13 @@ function Login() {
   if (userData) {
     return (
       <div className="Container">
-        <Board userData={userData} boardId={1} signOut={signOut} />
+        <Board userData={userData} boardId={1} signOut={signOutWrapper} />
       </div>
     );
   }
   return (
     <div className="Container">
-      <div className="Auth-Button" onClick={() => SignIn()}>
+      <div className="Auth-Button" onClick={signInWrapper}>
         [ Login ]
       </div>
     </div>

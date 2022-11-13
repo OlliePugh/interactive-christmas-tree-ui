@@ -1,34 +1,36 @@
-import { auth } from '../../config/fb_config';
-import { colors } from '../../utils/palette';
+import { auth } from "../../config/fb_config";
+import { colors } from "../../utils/palette";
 
-function Tools({userData,setCurrentColor,initCanvas}) {
+function Tools({ userData, setCurrentColor, initCanvas }) {
   return (
-    <div className="Tools" draggable={true                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }>
+    <div className="Tools" draggable={true}>
       <div className="Profile">
-        <div onClick={()=>initCanvas()} className="Reset-Btn Btn">[Reset]</div>
+        <div onClick={() => initCanvas()} className="Reset-Btn Btn">
+          [Reset]
+        </div>
         <div className="Username Btn">[{userData.displayName}]</div>
-        <div className='Exit-Btn Btn' onClick={() => {auth.signOut(); window.location.reload()}}>[Exit]</div>
+        <div
+          className="Exit-Btn Btn"
+          onClick={() => {
+            auth.signOut();
+            window.location.reload();
+          }}
+        >
+          [Exit]
+        </div>
       </div>
       <div className="Palette">
-        <div onClick={()=>setCurrentColor(colors.c1)} className="Palette-item" style={{backgroundColor: colors.c1}}></div>
-        <div onClick={()=>setCurrentColor(colors.c2)} className="Palette-item" style={{backgroundColor: colors.c2}}></div>
-        <div onClick={()=>setCurrentColor(colors.c3)} className="Palette-item" style={{backgroundColor: colors.c3}}></div>
-        <div onClick={()=>setCurrentColor(colors.c4)} className="Palette-item" style={{backgroundColor: colors.c4}}></div>
-        <div onClick={()=>setCurrentColor(colors.c5)} className="Palette-item" style={{backgroundColor: colors.c5}}></div>
-        <div onClick={()=>setCurrentColor(colors.c6)} className="Palette-item" style={{backgroundColor: colors.c6}}></div>
-        <div onClick={()=>setCurrentColor(colors.c7)} className="Palette-item" style={{backgroundColor: colors.c7}}></div>
-        <div onClick={()=>setCurrentColor(colors.c8)} className="Palette-item" style={{backgroundColor: colors.c8}}></div>
-        <div onClick={()=>setCurrentColor(colors.c9)} className="Palette-item" style={{backgroundColor: colors.c9}}></div>
-        <div onClick={()=>setCurrentColor(colors.c10)} className="Palette-item" style={{backgroundColor: colors.c10}}></div>
-        <div onClick={()=>setCurrentColor(colors.c11)} className="Palette-item" style={{backgroundColor: colors.c11}}></div>
-        <div onClick={()=>setCurrentColor(colors.c12)} className="Palette-item" style={{backgroundColor: colors.c12}}></div>
-        <div onClick={()=>setCurrentColor(colors.c13)} className="Palette-item" style={{backgroundColor: colors.c13}}></div>
-        <div onClick={()=>setCurrentColor(colors.c14)} className="Palette-item" style={{backgroundColor: colors.c14}}></div>
-        <div onClick={()=>setCurrentColor(colors.c15)} className="Palette-item" style={{backgroundColor: colors.c15}}></div>
-        <div onClick={()=>setCurrentColor(colors.c16)} className="Palette-item" style={{backgroundColor: colors.c16}}></div>
+        {Object.entries(colors).map(([key, value]) => (
+          <div
+            key={key}
+            onClick={() => setCurrentColor(value)}
+            className="Palette-item"
+            style={{ backgroundColor: value }}
+          ></div>
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default Tools
+export default Tools;

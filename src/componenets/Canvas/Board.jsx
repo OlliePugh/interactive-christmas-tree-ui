@@ -2,7 +2,7 @@
 /* eslint-disable array-callback-return */
 import { useEffect, useState } from "react";
 import { ref, onValue } from "firebase/database";
-import { WriteData, resetBoard } from "../../utils/fb_funcs";
+import { writeData, resetBoard } from "../../utils/fb_funcs";
 import realtime, { functions } from "../../config/fb_config";
 import { colors } from "../../utils/palette";
 import Square from "./Square";
@@ -13,34 +13,31 @@ import {
 } from "@tiendeo/react-zoom-pan-pinch";
 
 function Board({ userData, boardId }) {
+  // could use an array of refs here to have access to each squares value
+  const [{ boardWidth, boardHeight }, setBoardDimensions] = useState({
+    boardWidth: null,
+    boardHeight: null,
+  });
   const [currentColor, setCurrentColor] = useState(colors.c1);
-  const [colorMap, setColorMap] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  async function initCanvas() {
-    if (userData.uid === "gtfpqsy1DLhy4AEndnsppYFFeH22") {
-      console.log(
-        await resetBoard(functions, { boardId: 1, width: 80, height: 80 })
-      );
-    } else {
-      alert("You are not authorized to reset");
-    }
-  }
+  const initCanvas = async () => {
+    await resetBoard(functions, { boardId: 1, width: 80, height: 80 });
+  };
 
-  function CanvasListener() {
+  const canvasListener = () => {
     // TODO make it listen per tile so that no need to stream entire board to the client
-    const dbRef = ref(realtime, `board${boardId}`);
-    onValue(dbRef, (snapshot) => {
-      console.log(Object.values(snapshot.val()));
-      const data = Object.values(snapshot.val());
-      setColorMap(data);
+    const metaDataRef = ref(realtime, `board${boardId}/metadata`);
+    onValue(metaDataRef, (snapshot) => {
+      const { height, width } = snapshot.val();
+      setBoardDimensions({ boardHeight: height, boardWidth: width });
       setLoading(false);
     });
-  }
+  };
 
-  async function updateSquare(id, color) {
+  const updateSquare = async (id, color) => {
     console.log(
-      await WriteData(functions, {
+      await writeData(functions, {
         id,
         boardId,
         color,
@@ -48,16 +45,16 @@ function Board({ userData, boardId }) {
         lastModifierUID: userData.uid,
       })
     );
-  }
+  };
 
-  function SquareColorize(color) {
+  const squareColorize = (color) => {
     let r = document.querySelector(":root");
     r.style.setProperty("--squareBgColor", color);
     setCurrentColor(color);
-  }
+  };
 
   useEffect(() => {
-    CanvasListener();
+    canvasListener();
   }, [loading]);
 
   if (loading) {
@@ -78,20 +75,20 @@ function Board({ userData, boardId }) {
       initialPositionY={100}
     >
       <Tools
-        setCurrentColor={SquareColorize}
+        setCurrentColor={squareColorize}
         initCanvas={initCanvas}
         userData={userData}
       />
       <TransformComponent>
         <div className="Board">
           <div className="Canvas">
-            {colorMap.map((val, key) => {
+            {[...Array(boardHeight * boardWidth)].map((e, i) => {
               return (
                 <Square
-                  upadateSquare={() => updateSquare(val.id, currentColor)}
-                  key={key}
-                  id={val.id}
-                  color={val.color}
+                  boardId={boardId}
+                  key={i}
+                  id={i}
+                  currentColor={currentColor}
                 />
               );
             })}

@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase } from "firebase/database";
-import { getAuth } from "firebase/auth";
-import { getFunctions } from "firebase/functions";
+import { getDatabase, connectDatabaseEmulator } from "firebase/database";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+import environment from "../environment";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -21,8 +22,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
 const realtime = getDatabase(app);
-export const functions = getFunctions(app, "europe-west1");
-export const analytics = getAnalytics(app);
-export const auth = getAuth(app);
+const functions = getFunctions(app, "europe-west1");
+
+const analytics = getAnalytics(app);
+
+if (!environment.production) {
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectFunctionsEmulator(functions, "localhost", 5001);
+  connectDatabaseEmulator(realtime, "localhost", 9000);
+}
+export { functions, analytics, auth };
 export default realtime;
