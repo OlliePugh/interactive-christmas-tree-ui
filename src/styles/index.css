@@ -1,26 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Microbe&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.react-transform-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Press Start 2P", cursive;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-:root {
-  --squareBgColor: #ff4500;
-  --textColor: whitesmoke;
-}
-
-.Container {
+/* .Container {
   display: grid;
   place-items: center;
   height: 100vh;
@@ -32,9 +30,9 @@ body {
   width: 100vw;
   height: 100vh;
   margin-top: 10vh;
-}
+} */
 
-/* Canvas */
+/* Canvas
 .Canvas {
   width: 90vh;
   height: 90vh;
@@ -57,7 +55,7 @@ body {
 }
 
 /* Square */
-.Square {
+/* .Square {
   border: 1px solid #07070714;
 }
 .Square:hover {
@@ -111,4 +109,4 @@ body {
   height: 15px;
   border: 1px solid rgb(24, 41, 136);
   border-radius: 50%;
-}
+}  */
