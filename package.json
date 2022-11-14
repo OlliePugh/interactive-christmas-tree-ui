@@ -1,17 +1,23 @@
 {
-  "name": "reddit-place-clone",
+  "name": "internet-christmas-tree-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.3",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.13",
+    "firebase": "^9.14.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
     "@tiendeo/react-zoom-pan-pinch": "^3.3.1",
-    "firebase": "^9.6.10",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-scripts": "5.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^3.0.4"
+  },
+  "overrides": {
+    "@tiendeo/react-zoom-pan-pinch": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   },
   "scripts": {
     "start": "react-scripts start",

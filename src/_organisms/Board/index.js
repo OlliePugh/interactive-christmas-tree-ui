@@ -3,15 +3,15 @@ import { ref, get, child } from "firebase/database";
 import { resetBoard } from "../../utils/fb_funcs";
 import realtime, { functions } from "../../config/fb_config";
 import { colors } from "../../utils/palette";
-import Square from "./Square";
-import Tools from "../Tools/Tools";
+import Square from "../../_atoms/Square";
+import Tools from "../Tool";
 import {
   TransformWrapper,
   TransformComponent,
 } from "@tiendeo/react-zoom-pan-pinch";
 import { placementCooldown } from "../../config";
 
-function Board({ userData, boardId }) {
+const Board = ({ userData, boardId }) => {
   // could use an array of refs here to have access to each squares value
   const [{ boardWidth, boardHeight }, setBoardDimensions] = useState({
     boardWidth: null,
@@ -95,6 +95,6 @@ function Board({ userData, boardId }) {
       </TransformComponent>
     </TransformWrapper>
   );
-}
+};
 
 export default Board;

@@ -1,7 +1,7 @@
 import { auth } from "../../config/fb_config";
 import { colors } from "../../utils/palette";
 
-function Tools({ userData, setCurrentColor, initCanvas }) {
+const Tools = ({ userData, setCurrentColor, initCanvas }) => {
   return (
     <div className="Tools" draggable={true}>
       <div className="Profile">
@@ -31,6 +31,6 @@ function Tools({ userData, setCurrentColor, initCanvas }) {
       </div>
     </div>
   );
-}
+};
 
 export default Tools;

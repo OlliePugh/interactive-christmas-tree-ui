@@ -1,7 +1,11 @@
-import Login from "./componenets/Auth/Login";
+import Header from "./_organisms/Header";
 
 const App = () => {
-  return <Login />;
+  return (
+    <>
+      <Header />
+    </>
+  );
 };
 
 export default App;
