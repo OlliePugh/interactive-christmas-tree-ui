@@ -1,26 +1,21 @@
-import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import WireCanvas from "../../_atoms/WireCanvas";
-const Bulbs = ({ width, height }) => {
+import Bulb from "../../_atoms/Bulb";
+
+const Bulbs = ({ visible, width, height }) => {
   return (
     <Box
       height={height}
       width={width}
       sx={{ opacity: 0.7 }}
       border={"black 1px solid"}
+      position="absolute"
+      visibility={visible ? "visible" : "hidden"}
     >
-      <Typography position={"absolute"} top="500px" left="0px">
-        Hey
-      </Typography>
-      <Typography position={"absolute"} top="500px" left="300px">
-        Hey
-      </Typography>
-      <Typography position={"absolute"} top="300px" left="600px">
-        Hey
-      </Typography>
-      <Typography position={"absolute"} top="300px" left="200px">
-        Hey
-      </Typography>
+      <Bulb sx={{ left: "0px", top: "500px" }} />
+      <Bulb sx={{ left: "300px", top: "500px" }} />
+      <Bulb sx={{ left: "600px", top: "300px" }} />
+      <Bulb sx={{ left: "200px", top: "300px" }} />
       <WireCanvas
         bulbConnections={[
           [0, 500],
@@ -28,7 +23,7 @@ const Bulbs = ({ width, height }) => {
           [600, 300],
           [200, 300],
         ]}
-        bulbOffset={{ offsetX: 10, offsetY: 5 }}
+        bulbOffset={{ offsetX: 8, offsetY: 2 }}
       />
     </Box>
   );
