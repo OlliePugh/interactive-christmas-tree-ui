@@ -7,7 +7,6 @@ const Bulbs = ({ visible, width, height }) => {
     <Box
       height={height}
       width={width}
-      sx={{ opacity: 0.7 }}
       border={"black 1px solid"}
       position="absolute"
       visibility={visible ? "visible" : "hidden"}
@@ -23,7 +22,7 @@ const Bulbs = ({ visible, width, height }) => {
           [600, 300],
           [200, 300],
         ]}
-        bulbOffset={{ offsetX: 8, offsetY: 2 }}
+        bulbOffset={{ offsetX: 9, offsetY: 2 }}
       />
     </Box>
   );

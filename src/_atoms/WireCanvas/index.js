@@ -33,7 +33,7 @@ const WireCanvas = ({ bulbConnections, bulbOffset: { offsetX, offsetY } }) => {
     });
   }, [bulbConnections]);
 
-  return <canvas ref={canvasRef} />;
+  return <canvas style={{ opacity: 0.7 }} ref={canvasRef} />;
 };
 
 export default WireCanvas;
