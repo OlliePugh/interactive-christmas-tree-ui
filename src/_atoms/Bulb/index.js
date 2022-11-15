@@ -34,7 +34,10 @@ const Bulb = ({ sx }) => {
               width={"10px"}
               borderRadius={"10px"}
               marginX={"1px"}
-              onClick={() => setCurrentColour(value)}
+              onClick={() => {
+                setCurrentColour(value);
+                setPaletteOpen(false);
+              }}
               style={{ backgroundColor: value }}
             />
           ))}

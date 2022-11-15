@@ -1,8 +1,9 @@
 import { Box } from "@mui/system";
 import { colours } from "../../utils/palette";
 import { Typography } from "@mui/material";
+import AccountActions from "../AccountActions";
 
-const Header = () => {
+const Header = ({ signInCallback, signOutCallback, userData }) => {
   return (
     <Box
       sx={{
@@ -12,10 +13,22 @@ const Header = () => {
         padding: "10px",
       }}
     >
-      <Typography sx={{ display: "inline", flex: 1, color: "white" }}>
+      <Typography
+        sx={{
+          display: "inline",
+          flex: 1,
+          color: "white",
+          fontWeight: "bold",
+        }}
+        variant="h4"
+      >
         The Internet's Christmas Tree
       </Typography>
-      <Typography sx={{ display: "inline", color: "white" }}>Login</Typography>
+      <AccountActions
+        signInCallback={signInCallback}
+        signOutCallback={signOutCallback}
+        userData={userData}
+      />
     </Box>
   );
 };
