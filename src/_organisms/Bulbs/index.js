@@ -1,8 +1,18 @@
 import { Box } from "@mui/system";
 import WireCanvas from "../../_atoms/WireCanvas";
 import Bulb from "../../_atoms/Bulb";
+import lightConfig from "../../light_config.json";
+import { lightAdjustment } from "../../config";
+import { useMemo } from "react";
 
 const Bulbs = ({ visible, width, height }) => {
+  const scaledBulbs = useMemo(() => {
+    return lightConfig.map(({ x, y, id }) => ({
+      id,
+      x: x * lightAdjustment.x.scalar + lightAdjustment.x.offset,
+      y: y * lightAdjustment.y.scalar + lightAdjustment.y.offset,
+    }));
+  }, [lightConfig]);
   return (
     <Box
       height={height}
@@ -11,17 +21,17 @@ const Bulbs = ({ visible, width, height }) => {
       position="absolute"
       visibility={visible ? "visible" : "hidden"}
     >
-      <Bulb sx={{ left: "0px", top: "500px" }} />
-      <Bulb sx={{ left: "300px", top: "500px" }} />
-      <Bulb sx={{ left: "600px", top: "300px" }} />
-      <Bulb sx={{ left: "200px", top: "300px" }} />
+      {Object.entries(scaledBulbs).map(([item, { x, y, id }]) => (
+        <Bulb
+          key={item}
+          sx={{
+            left: x,
+            top: y,
+          }}
+        />
+      ))}
       <WireCanvas
-        bulbConnections={[
-          [0, 500],
-          [300, 500],
-          [600, 300],
-          [200, 300],
-        ]}
+        bulbConnections={scaledBulbs}
         bulbOffset={{ offsetX: 9, offsetY: 2 }}
       />
     </Box>

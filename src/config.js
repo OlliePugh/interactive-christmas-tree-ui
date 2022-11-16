@@ -7,4 +7,14 @@ export const treeDimensions = {
   width: 939,
 };
 
+export const lightAdjustment = {
+  x: {
+    scalar: 100,
+    offset: 1,
+  },
+  y: {
+    scalar: 20,
+    offset: 1,
+  },
+};
 export const placementCooldown = 60_000;

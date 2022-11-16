@@ -15,19 +15,20 @@ const WireCanvas = ({ bulbConnections, bulbOffset: { offsetX, offsetY } }) => {
     context.fillStyle = "#000000";
     // context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     context.beginPath();
-    bulbConnections.forEach(([x, y], i) => {
-      const nextPoint = bulbConnections[i + 1];
-      const a = nextPoint?.[0] - x;
-      const b = nextPoint?.[1] - y;
+    console.log(Object.values(bulbConnections));
+    Object.values(bulbConnections).forEach(({ x, y }, i) => {
+      const nextPoint = Object.values(bulbConnections)[i + 1];
+      const a = nextPoint?.x - x;
+      const b = nextPoint?.y - y;
       const distance = Math.sqrt(a * a + b * b); // larger the distance the more of a sag of the cable
       context.moveTo(x + offsetX, y + offsetY);
       context.bezierCurveTo(
         x,
         y + distance / 10,
-        nextPoint?.[0],
-        nextPoint?.[1] + distance / 10,
-        nextPoint?.[0] + offsetX,
-        nextPoint?.[1] + offsetY
+        nextPoint?.x,
+        nextPoint?.y + distance / 10,
+        nextPoint?.x + offsetX,
+        nextPoint?.y + offsetY
       );
       context.stroke();
     });
