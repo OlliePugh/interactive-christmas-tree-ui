@@ -40,7 +40,7 @@ const App = () => {
           userData={userData}
         />
         <Box sx={{ overflow: "hidden" }}>
-          <MainBody />
+          <MainBody userData={userData} />
         </Box>
         <Footer />
       </Box>

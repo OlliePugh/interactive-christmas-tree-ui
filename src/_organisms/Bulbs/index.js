@@ -3,16 +3,30 @@ import WireCanvas from "../../_atoms/WireCanvas";
 import Bulb from "../../_atoms/Bulb";
 import lightConfig from "../../light_config.json";
 import { lightAdjustment } from "../../config";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
+import { placementCooldown } from "../../config";
 
-const Bulbs = ({ visible, width, height }) => {
+const Bulbs = ({ visible, width, height, userData }) => {
+  const lastPlacement = useRef(0);
+
+  const placeCooldownCheck = () => {
+    const now = new Date().getTime();
+    if (now - lastPlacement.current > placementCooldown) {
+      lastPlacement.current = now;
+      return true;
+    } else {
+      console.log("not so fast");
+      return false;
+    }
+  };
+
   const scaledBulbs = useMemo(() => {
     return lightConfig.map(({ x, y, id }) => ({
       id,
       x: x * lightAdjustment.x.scalar + lightAdjustment.x.offset,
       y: y * lightAdjustment.y.scalar + lightAdjustment.y.offset,
     }));
-  }, [lightConfig]);
+  }, []);
   return (
     <Box
       height={height}
@@ -23,11 +37,14 @@ const Bulbs = ({ visible, width, height }) => {
     >
       {Object.entries(scaledBulbs).map(([item, { x, y, id }]) => (
         <Bulb
+          userData={userData}
           key={item}
+          id={id}
           sx={{
             left: x,
             top: y,
           }}
+          placeCooldownCheck={placeCooldownCheck}
         />
       ))}
       <WireCanvas
