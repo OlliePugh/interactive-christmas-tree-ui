@@ -2,15 +2,42 @@ import { Box } from "@mui/system";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
 import { treeDimensions } from "../../config";
-import { useState } from "react";
-import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Button, Snackbar, Alert } from "@mui/material";
 import { functions } from "../../config/fb_config";
 import { resetLights } from "../../utils/fb_funcs";
 
 const MainBody = ({ sx, userData }) => {
   const [virtualBulbsVisible, setVirtualBulbsVisible] = useState(true);
+  const [toastMessage, setToastMessage] = useState();
+  const [toastOpen, setToastOpen] = useState(false);
+
+  useEffect(() => {
+    if (!!toastMessage) {
+      setToastOpen(true);
+    }
+  }, [toastMessage]);
+
   return (
     <Box sx={{ ...sx }}>
+      <Snackbar
+        open={toastOpen}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => {
+          setToastOpen(false);
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setToastOpen(false);
+          }}
+          severity={toastMessage?.severity}
+          sx={{ width: "100%" }}
+        >
+          {toastMessage?.message}
+        </Alert>
+      </Snackbar>
       <Button
         onClick={() => {
           setVirtualBulbsVisible(!virtualBulbsVisible);
@@ -30,6 +57,7 @@ const MainBody = ({ sx, userData }) => {
         minScale={0.2}
         maxScale={15}
         initialScale={1}
+        centerZoomedOut={true}
       >
         <TransformComponent>
           <img
@@ -43,6 +71,7 @@ const MainBody = ({ sx, userData }) => {
             visible={virtualBulbsVisible}
             height={treeDimensions.height}
             width={treeDimensions.width}
+            setToastMessage={setToastMessage}
           />
         </TransformComponent>
       </TransformWrapper>

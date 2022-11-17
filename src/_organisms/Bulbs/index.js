@@ -6,7 +6,7 @@ import { lightAdjustment } from "../../config";
 import { useMemo, useRef } from "react";
 import { placementCooldown } from "../../config";
 
-const Bulbs = ({ visible, width, height, userData }) => {
+const Bulbs = ({ visible, width, height, userData, setToastMessage }) => {
   const lastPlacement = useRef(0);
 
   const placeCooldownCheck = () => {
@@ -15,7 +15,10 @@ const Bulbs = ({ visible, width, height, userData }) => {
       lastPlacement.current = now;
       return true;
     } else {
-      console.log("not so fast");
+      setToastMessage({
+        message: "Cooldown not finished...",
+        severity: "error",
+      });
       return false;
     }
   };
