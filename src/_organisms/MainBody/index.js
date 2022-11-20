@@ -64,7 +64,8 @@ const MainBody = ({ sx, userData }) => {
             alt="Christmas Tree"
             height={treeDimensions.height}
             width={treeDimensions.width}
-            src={require("../../assetts/tree.jpg")}
+            // src={require("../../assetts/tree.jpg")}
+            src={"http://192.168.1.182:8080/?action=stream"}
           />
           <Bulbs
             userData={userData}

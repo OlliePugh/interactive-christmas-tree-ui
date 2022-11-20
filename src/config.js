@@ -3,17 +3,17 @@ export const production = !(
 );
 
 export const treeDimensions = {
-  height: 2017,
-  width: 939,
+  width: 1280,
+  height: 720,
 };
 
 export const lightAdjustment = {
   x: {
-    scalar: 100,
+    scalar: 1,
     offset: 1,
   },
   y: {
-    scalar: 20,
+    scalar: 1,
     offset: 1,
   },
 };
