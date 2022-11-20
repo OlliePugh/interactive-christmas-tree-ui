@@ -18,7 +18,7 @@ body,
   box-sizing: border-box;
 }
 
-/* .Container {
+.bauble-wrapper .Container {
   display: grid;
   place-items: center;
   height: 100vh;
@@ -26,14 +26,14 @@ body,
   background-color: rgb(4, 49, 126);
 }
 
-.Board {
+.bauble-wrapper .Board {
   width: 100vw;
   height: 100vh;
   margin-top: 10vh;
-} */
+}
 
-/* Canvas
-.Canvas {
+/* Canvas */
+.bauble-wrapper .Canvas {
   width: 90vh;
   height: 90vh;
   display: grid;
@@ -43,26 +43,26 @@ body,
 }
 
 /* Loading */
-.Loading {
+.bauble-wrapper .Loading {
   width: 80vh;
   height: 80vh;
   display: grid;
   place-items: center;
 }
-.Loading_Text {
+.bauble-wrapper .Loading_Text {
   font-size: 2em;
   color: var(--textColor);
 }
 
 /* Square */
-/* .Square {
+.bauble-wrapper .Square {
   border: 1px solid #07070714;
 }
-.Square:hover {
+.bauble-wrapper .Square:hover {
   background-color: var(--squareBgColor) !important;
 }
 
-.Profile {
+.bauble-wrapper .Profile {
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -72,11 +72,11 @@ body,
   color: var(--textColor);
 }
 
-.Profile .Btn {
+.bauble-wrapper .Profile .Btn {
   color: var(--textColor);
 }
 
-.Tools {
+.bauble-wrapper .Tools {
   display: grid;
   place-items: center;
   position: sticky;
@@ -87,7 +87,7 @@ body,
   background-color: rgb(19, 78, 181);
 }
 
-.Auth-Button {
+.bauble-wrapper .Auth-Button {
   border: none;
   color: var(--textColor);
   background-color: transparent;
@@ -98,15 +98,15 @@ body,
   cursor: pointer;
 }
 
-.Palette {
+.bauble-wrapper .Palette {
   display: flex;
   justify-content: center;
   padding: 5px;
 }
-.Palette-item {
+.bauble-wrapper .Palette-item {
   margin: 2px;
   width: 15px;
   height: 15px;
   border: 1px solid rgb(24, 41, 136);
   border-radius: 50%;
-}  */
+}

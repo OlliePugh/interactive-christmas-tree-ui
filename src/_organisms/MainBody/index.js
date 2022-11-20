@@ -3,14 +3,19 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
 import { treeDimensions } from "../../config";
 import { useEffect, useState } from "react";
-import { Button, Snackbar, Alert } from "@mui/material";
+import { Button, Snackbar, Alert, Paper } from "@mui/material";
 import { functions } from "../../config/fb_config";
 import { resetLights } from "../../utils/fb_funcs";
+import Board from "../Board";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const MainBody = ({ sx, userData }) => {
   const [virtualBulbsVisible, setVirtualBulbsVisible] = useState(true);
   const [toastMessage, setToastMessage] = useState();
   const [toastOpen, setToastOpen] = useState(false);
+  const [baubleOpen, setBaubleOpen] = useState();
+
+  console.log("Bauble Open", baubleOpen);
 
   useEffect(() => {
     if (!!toastMessage) {
@@ -20,6 +25,29 @@ const MainBody = ({ sx, userData }) => {
 
   return (
     <Box sx={{ ...sx }}>
+      {baubleOpen && (
+        <OutsideClickHandler onOutsideClick={() => setBaubleOpen()}>
+          <Paper
+            sx={{
+              zIndex: 100,
+              margin: "auto",
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              position: "absolute",
+              height: "80%",
+              width: "95%",
+              overflow: "hidden",
+            }}
+            elevation={24}
+            className={"bauble-wrapper"}
+          >
+            <Board userData={userData} boardId={1} />
+          </Paper>
+        </OutsideClickHandler>
+      )}
+
       <Snackbar
         open={toastOpen}
         autoHideDuration={6000}
@@ -73,6 +101,7 @@ const MainBody = ({ sx, userData }) => {
             height={treeDimensions.height}
             width={treeDimensions.width}
             setToastMessage={setToastMessage}
+            openBauble={setBaubleOpen}
           />
         </TransformComponent>
       </TransformWrapper>

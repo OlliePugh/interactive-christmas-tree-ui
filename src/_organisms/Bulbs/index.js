@@ -5,8 +5,16 @@ import lightConfig from "../../light_config.json";
 import { lightAdjustment } from "../../config";
 import { useMemo, useRef } from "react";
 import { placementCooldown } from "../../config";
+import Bauble from "../Bauble";
 
-const Bulbs = ({ visible, width, height, userData, setToastMessage }) => {
+const Bulbs = ({
+  visible,
+  width,
+  height,
+  userData,
+  setToastMessage,
+  openBauble,
+}) => {
   const lastPlacement = useRef(0);
 
   const placeCooldownCheck = () => {
@@ -50,6 +58,7 @@ const Bulbs = ({ visible, width, height, userData, setToastMessage }) => {
           placeCooldownCheck={placeCooldownCheck}
         />
       ))}
+      <Bauble id={1} openBauble={openBauble} />
       <WireCanvas
         bulbConnections={scaledBulbs}
         bulbOffset={{ offsetX: 9, offsetY: 2 }}

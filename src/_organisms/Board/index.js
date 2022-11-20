@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import { ref, get, child } from "firebase/database";
+import { ref, get } from "firebase/database";
 import { resetBoard } from "../../utils/fb_funcs";
 import realtime, { functions } from "../../config/fb_config";
-import { colors } from "../../utils/palette";
+import { colours } from "../../utils/palette";
 import Square from "../../_atoms/Square";
 import Tools from "../Tool";
 import {
@@ -17,7 +17,7 @@ const Board = ({ userData, boardId }) => {
     boardWidth: null,
     boardHeight: null,
   });
-  const [currentColor, setCurrentColor] = useState(colors.c1);
+  const [currentColor, setCurrentColor] = useState(colours.c1);
   const [loading, setLoading] = useState(true);
   const lastPlacement = useRef(0);
 
