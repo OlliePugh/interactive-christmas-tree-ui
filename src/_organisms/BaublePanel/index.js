@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { ref, get } from "firebase/database";
 import { resetBoard } from "../../utils/fb_funcs";
 import realtime, { functions } from "../../config/fb_config";
-import { colours } from "../../utils/palette";
 import {
   TransformWrapper,
   TransformComponent,
@@ -16,7 +15,6 @@ const BaublePanel = ({ userData, boardId }) => {
     boardWidth: null,
     boardHeight: null,
   });
-  const [currentColor, setCurrentColor] = useState(colours.c1);
   const [loading, setLoading] = useState(true);
   const lastPlacement = useRef(0);
 
@@ -50,7 +48,7 @@ const BaublePanel = ({ userData, boardId }) => {
   if (loading) {
     return (
       <div className="Loading">
-        <div className="Loading_Text">Loading...</div>
+        <div className="Loading_Text">Getting Bauble Size...</div>
       </div>
     );
   }
@@ -58,7 +56,7 @@ const BaublePanel = ({ userData, boardId }) => {
   return (
     <TransformWrapper
       limitToBounds={false}
-      minScale={0}
+      minScale={0.5}
       maxScale={15}
       initialScale={2}
       initialPositionX={100}
