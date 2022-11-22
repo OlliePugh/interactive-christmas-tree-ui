@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Button, Snackbar, Alert, Paper } from "@mui/material";
 import { functions } from "../../config/fb_config";
 import { resetLights } from "../../utils/fb_funcs";
-import Board from "../Board";
+import BaublePanel from "../BaublePanel";
 import OutsideClickHandler from "react-outside-click-handler";
 
 const MainBody = ({ sx, userData }) => {
@@ -43,7 +43,7 @@ const MainBody = ({ sx, userData }) => {
             elevation={24}
             className={"bauble-wrapper"}
           >
-            <Board userData={userData} boardId={1} />
+            <BaublePanel userData={userData} boardId={1} />
           </Paper>
         </OutsideClickHandler>
       )}
