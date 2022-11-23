@@ -25,28 +25,32 @@ const MainBody = ({ sx, userData }) => {
 
   return (
     <Box sx={{ ...sx }}>
-      {baubleOpen && (
-        <OutsideClickHandler onOutsideClick={() => setBaubleOpen()}>
-          <Paper
-            sx={{
-              zIndex: 100,
-              margin: "auto",
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              position: "absolute",
-              height: "80%",
-              width: "95%",
-              overflow: "hidden",
-            }}
-            elevation={24}
-            className={"bauble-wrapper"}
-          >
-            <BaublePanel userData={userData} boardId={1} />
-          </Paper>
-        </OutsideClickHandler>
-      )}
+      <OutsideClickHandler onOutsideClick={() => setBaubleOpen()}>
+        <Paper
+          sx={{
+            display: baubleOpen === 1 ? "block" : "none",
+            zIndex: 100,
+            margin: "auto",
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
+            position: "absolute",
+            height: "80%",
+            width: "95%",
+            overflow: "hidden",
+          }}
+          elevation={24}
+          className={"bauble-wrapper"}
+        >
+          <BaublePanel
+            shouldLoad={baubleOpen === 1}
+            userData={userData}
+            boardId={1}
+            setToastMessage={setToastMessage}
+          />
+        </Paper>
+      </OutsideClickHandler>
 
       <Snackbar
         open={toastOpen}
@@ -101,7 +105,17 @@ const MainBody = ({ sx, userData }) => {
             height={treeDimensions.height}
             width={treeDimensions.width}
             setToastMessage={setToastMessage}
-            openBauble={setBaubleOpen}
+            openBauble={(id) => {
+              setToastMessage({
+                message:
+                  "Loading... (This will take a few seconds on the first time)",
+                severity: "info",
+              });
+              setTimeout(() => {
+                // add a delay cause this can really freeze the page :D
+                setBaubleOpen(id);
+              }, 300);
+            }}
           />
         </TransformComponent>
       </TransformWrapper>

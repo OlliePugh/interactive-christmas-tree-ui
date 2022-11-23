@@ -6,12 +6,11 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { baubleColours } from "../../utils/palette";
 import { writeData } from "../../utils/fb_funcs";
 import { functions } from "../../config/fb_config";
-import { Typography } from "@mui/material";
 
-const Board = ({ width, height, boardId, placeCooldownCheck }) => {
+const Board = ({ width, height, boardId, placeCooldownCheck, shouldLoad }) => {
   const [currentClickPos, setCurrentClickPos] = useState();
   const [loaded, setLoaded] = useState(false);
-  const canvasRef = useRef(null);
+  const canvasRef = useRef();
 
   const setColour = async (colour) => {
     if (!placeCooldownCheck()) {
@@ -33,30 +32,34 @@ const Board = ({ width, height, boardId, placeCooldownCheck }) => {
   };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    //Our first draw
-    canvas.width = width * 10;
-    canvas.height = height * 10;
-    canvas.style.width = `${width * 10}px`;
-    canvas.style.height = `${height * 10}px`;
-    context.fillStyle = "#000000";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    console.log("Use effect triggered");
+    if (shouldLoad && !loaded) {
+      // if this component is to start loading and its not already loaded
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+      //Our first draw
+      canvas.width = width * 10;
+      canvas.height = height * 10;
+      canvas.style.width = `${width * 10}px`;
+      canvas.style.height = `${height * 10}px`;
+      context.fillStyle = "#000000";
+      context.fillRect(0, 0, canvas.width, canvas.height);
 
-    // create listeners
-    for (let i = 0; i < height * width; i++) {
-      const col = i % width;
-      const row = Math.floor(i / width);
-      const dbRef = ref(realtime, `board${boardId}/data/${i}`);
-      onValue(dbRef, (snapshot) => {
-        setPixelColour(row, col, snapshot.val().color);
-        if (!loaded && i === height * width - 1) {
-          //e.g. the last pixel
-          setLoaded(true);
-        }
-      });
+      // create listeners
+      for (let i = 0; i < height * width; i++) {
+        const col = i % width;
+        const row = Math.floor(i / width);
+        const dbRef = ref(realtime, `board${boardId}/data/${i}`);
+        onValue(dbRef, (snapshot) => {
+          setPixelColour(row, col, snapshot.val().color);
+          if (!loaded && i === height * width - 1) {
+            //e.g. the last pixel
+            setLoaded(true);
+          }
+        });
+      }
     }
-  }, []);
+  }, [shouldLoad]);
 
   const setPixelColour = (row, col, colour) => {
     const canvas = canvasRef.current;

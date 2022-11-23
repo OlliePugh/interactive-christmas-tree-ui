@@ -9,7 +9,7 @@ import {
 import { placementCooldown } from "../../config";
 import Board from "../Board";
 
-const BaublePanel = ({ userData, boardId }) => {
+const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
   // could use an array of refs here to have access to each squares value
   const [{ boardWidth, boardHeight }, setBoardDimensions] = useState({
     boardWidth: null,
@@ -36,7 +36,10 @@ const BaublePanel = ({ userData, boardId }) => {
       lastPlacement.current = now;
       return true;
     } else {
-      console.log("not so fast");
+      setToastMessage({
+        message: "Cooldown not finished...",
+        severity: "error",
+      });
       return false;
     }
   };
@@ -71,6 +74,7 @@ const BaublePanel = ({ userData, boardId }) => {
                 height={boardHeight}
                 boardId={boardId}
                 placeCooldownCheck={placeCooldownCheck}
+                shouldLoad={shouldLoad}
               />
             )}
           </div>
