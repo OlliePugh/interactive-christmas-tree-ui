@@ -3,8 +3,8 @@ export const production = !(
 );
 
 export const treeDimensions = {
-  width: 1280,
-  height: 720,
+  width: 720,
+  height: 1280,
 };
 
 export const lightAdjustment = {

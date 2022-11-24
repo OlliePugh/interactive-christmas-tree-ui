@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+import { connectStorageEmulator, getStorage } from "@firebase/storage";
 import { production } from "../config";
 
 // Your web app's Firebase configuration
@@ -26,6 +27,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const realtime = getDatabase(app);
 const functions = getFunctions(app, "europe-west1");
+const storage = getStorage(app);
 
 const analytics = getAnalytics(app);
 
@@ -33,6 +35,7 @@ if (!production) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
   connectFunctionsEmulator(functions, "localhost", 5001);
   connectDatabaseEmulator(realtime, "localhost", 9000);
+  connectStorageEmulator(storage, "localhost", 9199);
 }
-export { functions, analytics, auth };
+export { functions, analytics, auth, storage };
 export default realtime;

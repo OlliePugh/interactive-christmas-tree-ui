@@ -88,14 +88,15 @@ const MainBody = ({ sx, userData }) => {
         minScale={0.2}
         maxScale={15}
         initialScale={1}
-        centerZoomedOut={true}
+        centerZoomedOut={false}
       >
         <TransformComponent>
           <img
             alt="Christmas Tree"
-            height={treeDimensions.height}
-            width={treeDimensions.width}
-            // src={require("../../assetts/tree.jpg")}
+            style={{
+              transformOrigin: "top left",
+              transform: `translateY(${treeDimensions.height}px) rotate(-90deg)`,
+            }}
             src={"http://192.168.1.182:8080/?action=stream"}
           />
           <Bulbs

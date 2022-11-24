@@ -15,7 +15,6 @@ const WireCanvas = ({ bulbConnections, bulbOffset: { offsetX, offsetY } }) => {
     context.fillStyle = "#000000";
     // context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     context.beginPath();
-    console.log(Object.values(bulbConnections));
     Object.values(bulbConnections).forEach(({ x, y }, i) => {
       const nextPoint = Object.values(bulbConnections)[i + 1];
       const a = nextPoint?.x - x;

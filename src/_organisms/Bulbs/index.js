@@ -3,9 +3,12 @@ import WireCanvas from "../../_atoms/WireCanvas";
 import Bulb from "../../_atoms/Bulb";
 import lightConfig from "../../light_config.json";
 import { lightAdjustment } from "../../config";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { placementCooldown } from "../../config";
+import { storage } from "../../config/fb_config";
 import Bauble from "../Bauble";
+import axios from "axios";
+import { ref, getDownloadURL } from "@firebase/storage";
 
 const Bulbs = ({
   visible,
@@ -16,6 +19,13 @@ const Bulbs = ({
   openBauble,
 }) => {
   const lastPlacement = useRef(0);
+
+  useEffect(() => {
+    getDownloadURL(ref(storage, "lights.json")).then(async (url) => {
+      const result = await axios.get(url);
+      console.log(result.data);
+    });
+  }, [userData]);
 
   const placeCooldownCheck = () => {
     const now = new Date().getTime();
