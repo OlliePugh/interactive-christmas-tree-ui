@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { ref, onValue } from "firebase/database";
+import { ref, get, onChildChanged } from "firebase/database";
 import realtime from "../../config/fb_config";
 import ColourPicker from "../../_atoms/ColourPicker";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -7,7 +7,7 @@ import { baubleColours } from "../../utils/palette";
 import { writeData } from "../../utils/fb_funcs";
 import { functions } from "../../config/fb_config";
 
-const Board = ({ width, height, boardId, placeCooldownCheck, shouldLoad }) => {
+const Board = ({ width, height, boardId, placeCooldownCheck }) => {
   const [currentClickPos, setCurrentClickPos] = useState();
   const [loaded, setLoaded] = useState(false);
   const canvasRef = useRef();
@@ -31,41 +31,51 @@ const Board = ({ width, height, boardId, placeCooldownCheck, shouldLoad }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("Use effect triggered");
-    if (shouldLoad && !loaded) {
-      // if this component is to start loading and its not already loaded
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-      //Our first draw
-      canvas.width = width * 10;
-      canvas.height = height * 10;
-      canvas.style.width = `${width * 10}px`;
-      canvas.style.height = `${height * 10}px`;
-      context.fillStyle = "#000000";
-      context.fillRect(0, 0, canvas.width, canvas.height);
+  const createIndividualListeners = () => {
+    const dbRef = ref(realtime, `board${boardId}/data`);
+    onChildChanged(dbRef, (snapshot) => {
+      const lightId = snapshot.key;
+      const col = lightId % width;
+      const row = Math.floor(lightId / width);
+      setPixelColour(row, col, snapshot.val().color);
+    });
+  };
 
-      // create listeners
-      for (let i = 0; i < height * width; i++) {
-        const col = i % width;
-        const row = Math.floor(i / width);
-        const dbRef = ref(realtime, `board${boardId}/data/${i}`);
-        onValue(dbRef, (snapshot) => {
-          setPixelColour(row, col, snapshot.val().color);
-          if (!loaded && i === height * width - 1) {
-            //e.g. the last pixel
-            setLoaded(true);
-          }
-        });
-      }
-    }
-  }, [shouldLoad]);
+  useEffect(() => {
+    // if this component is to start loading and its not already loaded
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    //Our first draw
+    canvas.width = width * 10;
+    canvas.height = height * 10;
+    canvas.style.width = `${width * 10}px`;
+    canvas.style.height = `${height * 10}px`;
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    // create listeners
+    // get entire board
+    (async () => {
+      const fullBoard = ref(realtime, `board${boardId}/data`);
+      const result = await get(fullBoard);
+      fillEntireBoard(result.val());
+      createIndividualListeners();
+      setLoaded(true);
+    })();
+  }, []);
 
   const setPixelColour = (row, col, colour) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.fillStyle = colour;
     context.fillRect(col * 10, row * 10, 10, 10);
+  };
+
+  const fillEntireBoard = (entireBoard) => {
+    entireBoard.forEach((pixel, index) => {
+      const col = index % width;
+      const row = Math.floor(index / width);
+      setPixelColour(row, col, pixel.color);
+    });
   };
 
   const canvasClick = (event) => {

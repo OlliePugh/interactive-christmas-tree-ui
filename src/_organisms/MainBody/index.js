@@ -44,7 +44,6 @@ const MainBody = ({ sx, userData }) => {
           className={"bauble-wrapper"}
         >
           <BaublePanel
-            shouldLoad={baubleOpen === 1}
             userData={userData}
             boardId={1}
             setToastMessage={setToastMessage}
@@ -105,17 +104,7 @@ const MainBody = ({ sx, userData }) => {
             height={treeDimensions.height}
             width={treeDimensions.width}
             setToastMessage={setToastMessage}
-            openBauble={(id) => {
-              setToastMessage({
-                message:
-                  "Loading... (This will take a few seconds on the first time)",
-                severity: "info",
-              });
-              setTimeout(() => {
-                // add a delay cause this can really freeze the page :D
-                setBaubleOpen(id);
-              }, 300);
-            }}
+            openBauble={setBaubleOpen}
           />
         </TransformComponent>
       </TransformWrapper>
