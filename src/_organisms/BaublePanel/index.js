@@ -18,8 +18,8 @@ const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
   const [loading, setLoading] = useState(true);
   const lastPlacement = useRef(0);
 
-  const initCanvas = async () => {
-    await resetBoard(functions, { boardId: 1, width: 160, height: 124 });
+  const initCanvas = () => {
+    resetBoard(functions, { boardId: 3, width: 160, height: 124 });
   };
 
   // useEffect(initCanvas, []);
@@ -72,6 +72,8 @@ const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
           <div className="Canvas">
             {boardWidth && boardHeight && (
               <Board
+                userData={userData}
+                setToastMessage={setToastMessage}
                 width={boardWidth}
                 height={boardHeight}
                 boardId={boardId}

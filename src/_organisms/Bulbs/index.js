@@ -23,14 +23,17 @@ const Bulbs = ({
   const lastPlacement = useRef(0);
   const bulbsColoursRef = useRef();
   bulbsColoursRef.current = bulbsColours;
-
   useEffect(() => {
     (async () => {
       const lightsRef = ref(realtime, `lights/data`);
       const result = await get(lightsRef);
       const lights = result.val();
       setBulbsColours(lights);
-      createIndividualListeners();
+      const dbRef = ref(realtime, `lights/data`);
+      onChildChanged(dbRef, (snapshot) => {
+        const lightId = Number(snapshot.key);
+        setBulbColour(lightId, snapshot.val());
+      });
     })();
   }, []);
 
@@ -49,14 +52,6 @@ const Bulbs = ({
     }
     writeLights(functions, { id, colour });
     setBulbColour(id, colour);
-  };
-
-  const createIndividualListeners = () => {
-    const dbRef = ref(realtime, `lights/data`);
-    onChildChanged(dbRef, (snapshot) => {
-      const lightId = Number(snapshot.key);
-      setBulbColour(lightId, snapshot.val());
-    });
   };
 
   const placeCooldownCheck = () => {
@@ -111,6 +106,12 @@ const Bulbs = ({
         />
       ))}
       <Bauble id={1} openBauble={openBauble} />
+      <Bauble id={2} openBauble={openBauble} sx={{ top: 0, right: 0 }} />
+      <Bauble
+        id={3}
+        openBauble={openBauble}
+        sx={{ top: "50%", right: "50%" }}
+      />
       <WireCanvas
         bulbConnections={scaledBulbs}
         bulbOffset={{ offsetX: 9, offsetY: 2 }}

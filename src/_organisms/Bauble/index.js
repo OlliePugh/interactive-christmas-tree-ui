@@ -1,12 +1,16 @@
 import { Box } from "@mui/system";
 
-const Bauble = ({ openBauble, id }) => {
+const Bauble = ({ openBauble, id, sx }) => {
   return (
     <Box
-      sx={{ position: "absolute", zIndex: 10 }}
+      sx={{ ...sx, position: "absolute", zIndex: 10 }}
       onClick={() => openBauble(id)}
     >
-      <img height={"100px"} src={require("../../assetts/bauble.png")} />
+      <img
+        height={"100px"}
+        alt="Bauble"
+        src={require("../../assetts/bauble.png")}
+      />
     </Box>
   );
 };

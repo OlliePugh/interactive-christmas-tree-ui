@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { ref, get, onChildChanged } from "firebase/database";
 import realtime from "../../config/fb_config";
 import ColourPicker from "../../_atoms/ColourPicker";
@@ -7,7 +7,14 @@ import { baubleColours } from "../../utils/palette";
 import { writeData } from "../../utils/fb_funcs";
 import { functions } from "../../config/fb_config";
 
-const Board = ({ width, height, boardId, placeCooldownCheck }) => {
+const Board = ({
+  width,
+  height,
+  boardId,
+  placeCooldownCheck,
+  setToastMessage,
+  userData,
+}) => {
   const [currentClickPos, setCurrentClickPos] = useState();
   const [loaded, setLoaded] = useState(false);
   const canvasRef = useRef();
@@ -31,15 +38,23 @@ const Board = ({ width, height, boardId, placeCooldownCheck }) => {
     }
   };
 
-  const createIndividualListeners = () => {
-    const dbRef = ref(realtime, `board${boardId}/data`);
-    onChildChanged(dbRef, (snapshot) => {
-      const lightId = snapshot.key;
-      const col = lightId % width;
-      const row = Math.floor(lightId / width);
-      setPixelColour(row, col, snapshot.val().colour);
-    });
+  const setPixelColour = (row, col, colour) => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.fillStyle = colour;
+    context.fillRect(col * 10, row * 10, 10, 10);
   };
+
+  const fillEntireBoard = useCallback(
+    (entireBoard) => {
+      Object.entries(entireBoard).forEach(([index, pixel]) => {
+        const col = index % width;
+        const row = Math.floor(index / width);
+        setPixelColour(row, col, pixel.colour);
+      });
+    },
+    [width]
+  );
 
   useEffect(() => {
     // if this component is to start loading and its not already loaded
@@ -58,25 +73,16 @@ const Board = ({ width, height, boardId, placeCooldownCheck }) => {
       const fullBoard = ref(realtime, `board${boardId}/data`);
       const result = await get(fullBoard);
       fillEntireBoard(result.val());
-      createIndividualListeners();
+      const dbRef = ref(realtime, `board${boardId}/data`);
+      onChildChanged(dbRef, (snapshot) => {
+        const lightId = snapshot.key;
+        const col = lightId % width;
+        const row = Math.floor(lightId / width);
+        setPixelColour(row, col, snapshot.val().colour);
+      });
       setLoaded(true);
     })();
-  }, []);
-
-  const setPixelColour = (row, col, colour) => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    context.fillStyle = colour;
-    context.fillRect(col * 10, row * 10, 10, 10);
-  };
-
-  const fillEntireBoard = (entireBoard) => {
-    Object.entries(entireBoard).forEach(([index, pixel]) => {
-      const col = index % width;
-      const row = Math.floor(index / width);
-      setPixelColour(row, col, pixel.colour);
-    });
-  };
+  }, [boardId, fillEntireBoard, height, width]);
 
   const canvasClick = (event) => {
     const rect = canvasRef.current.getBoundingClientRect(); // abs. size of element
@@ -113,7 +119,15 @@ const Board = ({ width, height, boardId, placeCooldownCheck }) => {
         </OutsideClickHandler>
       )}
       <canvas
-        onClick={(event) => canvasClick(event)}
+        onClick={
+          userData
+            ? (event) => canvasClick(event)
+            : () =>
+                setToastMessage({
+                  message: "You need to be logged in to do that!",
+                  severity: "error",
+                })
+        }
         style={{
           border: "1px solid black",
           imageRendering: "pixelated",
