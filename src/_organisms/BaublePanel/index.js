@@ -22,6 +22,8 @@ const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
     await resetBoard(functions, { boardId: 1, width: 160, height: 124 });
   };
 
+  // useEffect(initCanvas, []);
+
   const canvasListener = async () => {
     const metaDataRef = ref(realtime, `board${boardId}/metadata`);
     const result = await get(metaDataRef);

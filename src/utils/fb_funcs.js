@@ -24,7 +24,6 @@ const writeData = async (functions, data) => {
   const changeSquare = httpsCallable(functions, "changeSquare");
   const result = await changeSquare(data);
   console.log(result);
-  // set(ref(db, path), data);
 };
 
 const resetBoard = async (functions, data) => {

@@ -3,12 +3,13 @@ import WireCanvas from "../../_atoms/WireCanvas";
 import Bulb from "../../_atoms/Bulb";
 import lightConfig from "../../light_config.json";
 import { lightAdjustment } from "../../config";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import realtime from "../../config/fb_config";
+import { get, ref, onChildChanged } from "firebase/database";
 import { placementCooldown } from "../../config";
-import { storage } from "../../config/fb_config";
 import Bauble from "../Bauble";
-import axios from "axios";
-import { ref, getDownloadURL } from "@firebase/storage";
+import { writeLights } from "../../utils/fb_funcs";
+import { functions } from "../../config/fb_config";
 
 const Bulbs = ({
   visible,
@@ -18,14 +19,45 @@ const Bulbs = ({
   setToastMessage,
   openBauble,
 }) => {
+  const [bulbsColours, setBulbsColours] = useState();
   const lastPlacement = useRef(0);
+  const bulbsColoursRef = useRef();
+  bulbsColoursRef.current = bulbsColours;
 
   useEffect(() => {
-    getDownloadURL(ref(storage, "lights.json")).then(async (url) => {
-      const result = await axios.get(url);
-      console.log(result.data);
+    (async () => {
+      const lightsRef = ref(realtime, `lights/data`);
+      const result = await get(lightsRef);
+      const lights = result.val();
+      setBulbsColours(lights);
+      createIndividualListeners();
+    })();
+  }, []);
+
+  const setBulbColour = (id, colour) => {
+    if (bulbsColoursRef.current) {
+      const bulbsCopy = [...bulbsColoursRef.current];
+      bulbsCopy[id] = colour;
+      setBulbsColours(bulbsCopy);
+    }
+  };
+
+  const broadcastBulbColour = (id, colour) => {
+    if (!placeCooldownCheck()) {
+      // cooldown not finished
+      return;
+    }
+    writeLights(functions, { id, colour });
+    setBulbColour(id, colour);
+  };
+
+  const createIndividualListeners = () => {
+    const dbRef = ref(realtime, `lights/data`);
+    onChildChanged(dbRef, (snapshot) => {
+      const lightId = Number(snapshot.key);
+      setBulbColour(lightId, snapshot.val());
     });
-  }, [userData]);
+  };
 
   const placeCooldownCheck = () => {
     const now = new Date().getTime();
@@ -59,13 +91,23 @@ const Bulbs = ({
       {Object.entries(scaledBulbs).map(([item, { x, y, id }]) => (
         <Bulb
           userData={userData}
+          colour={bulbsColours?.[id]}
           key={item}
           id={id}
           sx={{
             left: x,
             top: y,
           }}
-          placeCooldownCheck={placeCooldownCheck}
+          setColourCallback={
+            userData
+              ? broadcastBulbColour
+              : () => {
+                  setToastMessage({
+                    message: "You need to be logged in to do that!",
+                    severity: "error",
+                  });
+                }
+          }
         />
       ))}
       <Bauble id={1} openBauble={openBauble} />

@@ -24,7 +24,7 @@ const Board = ({ width, height, boardId, placeCooldownCheck }) => {
       writeData(functions, {
         id,
         boardId,
-        color: colour,
+        colour,
       });
     } catch (e) {
       console.log(e);
@@ -37,7 +37,7 @@ const Board = ({ width, height, boardId, placeCooldownCheck }) => {
       const lightId = snapshot.key;
       const col = lightId % width;
       const row = Math.floor(lightId / width);
-      setPixelColour(row, col, snapshot.val().color);
+      setPixelColour(row, col, snapshot.val().colour);
     });
   };
 
@@ -71,10 +71,10 @@ const Board = ({ width, height, boardId, placeCooldownCheck }) => {
   };
 
   const fillEntireBoard = (entireBoard) => {
-    entireBoard.forEach((pixel, index) => {
+    Object.entries(entireBoard).forEach(([index, pixel]) => {
       const col = index % width;
       const row = Math.floor(index / width);
-      setPixelColour(row, col, pixel.color);
+      setPixelColour(row, col, pixel.colour);
     });
   };
 
