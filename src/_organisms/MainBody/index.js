@@ -67,7 +67,7 @@ const MainBody = ({ sx, userData }) => {
           setVirtualBulbsVisible(!virtualBulbsVisible);
         }}
       >
-        Hide Stream
+        Hide Overlay
       </Button>
       <Button
         onClick={() => {

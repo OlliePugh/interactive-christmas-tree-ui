@@ -33,7 +33,7 @@ const analytics = getAnalytics(app);
 
 if (!production) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
-  connectFunctionsEmulator(functions, "localhost", 5001);
+  connectFunctionsEmulator(functions, "192.168.1.85", 5001);
   connectDatabaseEmulator(realtime, "localhost", 9000);
   connectStorageEmulator(storage, "localhost", 9199);
 }
