@@ -17,4 +17,6 @@ export const lightAdjustment = {
     offset: 1,
   },
 };
-export const placementCooldown = 60_000;
+
+export const hiddenBulbs = [0, 1, 2, 3, 4, 5, 6];
+export const placementCooldown = 1_000;

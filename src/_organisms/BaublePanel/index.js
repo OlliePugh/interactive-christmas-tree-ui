@@ -19,7 +19,7 @@ const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
   const lastPlacement = useRef(0);
 
   const initCanvas = () => {
-    resetBoard(functions, { boardId: boardId, width: 160, height: 124 });
+    resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
   };
 
   // useEffect(initCanvas, []);

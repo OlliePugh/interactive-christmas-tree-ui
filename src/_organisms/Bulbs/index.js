@@ -10,6 +10,7 @@ import { placementCooldown } from "../../config";
 import Bauble from "../Bauble";
 import { writeLights } from "../../utils/fb_funcs";
 import { functions } from "../../config/fb_config";
+import { hiddenBulbs } from "../../config";
 
 const Bulbs = ({
   visible,
@@ -69,11 +70,16 @@ const Bulbs = ({
   };
 
   const scaledBulbs = useMemo(() => {
-    return lightConfig.map(({ x, y, id }) => ({
-      id,
-      x: x * lightAdjustment.x.scalar + lightAdjustment.x.offset,
-      y: y * lightAdjustment.y.scalar + lightAdjustment.y.offset,
-    }));
+    return lightConfig
+      .map(
+        ({ x, y, id }) =>
+          !hiddenBulbs.includes(id) && {
+            id,
+            x: x * lightAdjustment.x.scalar + lightAdjustment.x.offset,
+            y: y * lightAdjustment.y.scalar + lightAdjustment.y.offset,
+          }
+      )
+      .filter((lightPos) => lightPos);
   }, []);
   return (
     <Box
@@ -83,11 +89,11 @@ const Bulbs = ({
       position="absolute"
       visibility={visible ? "visible" : "hidden"}
     >
-      {Object.entries(scaledBulbs).map(([item, { x, y, id }]) => (
+      {Object.entries(scaledBulbs).map(([_, { x, y, id }]) => (
         <Bulb
           userData={userData}
           colour={bulbsColours?.[id]}
-          key={item}
+          key={id}
           id={id}
           sx={{
             left: x,
