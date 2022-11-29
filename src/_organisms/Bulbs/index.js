@@ -19,9 +19,10 @@ const Bulbs = ({
   userData,
   setToastMessage,
   openBauble,
+  lastPlacement,
+  setLastPlacement,
 }) => {
   const [bulbsColours, setBulbsColours] = useState();
-  const lastPlacement = useRef(0);
   const bulbsColoursRef = useRef();
   bulbsColoursRef.current = bulbsColours;
   useEffect(() => {
@@ -56,9 +57,9 @@ const Bulbs = ({
   };
 
   const placeCooldownCheck = () => {
-    const now = new Date().getTime();
-    if (now - lastPlacement.current > placementCooldown) {
-      lastPlacement.current = now;
+    const now = Date.now();
+    if (now - lastPlacement > placementCooldown) {
+      setLastPlacement(now);
       return true;
     } else {
       setToastMessage({

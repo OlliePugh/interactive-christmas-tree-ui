@@ -31,6 +31,7 @@ const BaublePaper = ({
         className={"bauble-wrapper"}
       >
         <BaublePanel
+          setBaubleOpen={setBaubleOpen}
           userData={userData}
           boardId={boardId}
           setToastMessage={setToastMessage}

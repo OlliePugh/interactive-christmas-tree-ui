@@ -19,4 +19,4 @@ export const lightAdjustment = {
 };
 
 export const hiddenBulbs = [0, 1, 2, 3, 4, 5, 6];
-export const placementCooldown = 1_000;
+export const placementCooldown = 10_000;

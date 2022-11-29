@@ -20,10 +20,10 @@ const Board = ({
   const canvasRef = useRef();
 
   const setColour = async (colour) => {
-    // if (!placeCooldownCheck()) {
-    //   // cooldown not finished
-    //   return;
-    // }
+    if (!placeCooldownCheck()) {
+      // cooldown not finished
+      return;
+    }
 
     const id = width * currentClickPos.row + currentClickPos.col;
     setPixelColour(currentClickPos.row, currentClickPos.col, colour);

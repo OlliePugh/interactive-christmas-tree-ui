@@ -8,15 +8,25 @@ import {
 } from "@tiendeo/react-zoom-pan-pinch";
 import { placementCooldown } from "../../config";
 import Board from "../Board";
+import { IconButton, Box } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import Countdown from "../../_atoms/Countdown";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 
-const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
+const BaublePanel = ({
+  setBaubleOpen,
+  userData,
+  boardId,
+  setToastMessage,
+  shouldLoad,
+}) => {
   // could use an array of refs here to have access to each squares value
   const [{ boardWidth, boardHeight }, setBoardDimensions] = useState({
     boardWidth: null,
     boardHeight: null,
   });
   const [loading, setLoading] = useState(true);
-  const lastPlacement = useRef(0);
+  const [lastPlacement, setLastPlacement] = useState(0);
 
   const initCanvas = () => {
     resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
@@ -33,9 +43,9 @@ const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
   };
 
   const placeCooldownCheck = () => {
-    const now = new Date().getTime();
-    if (now - lastPlacement.current > placementCooldown) {
-      lastPlacement.current = now;
+    const now = Date.now();
+    if (now - lastPlacement > placementCooldown) {
+      setLastPlacement(now);
       return true;
     } else {
       setToastMessage({
@@ -67,6 +77,23 @@ const BaublePanel = ({ userData, boardId, setToastMessage, shouldLoad }) => {
       initialPositionX={100}
       initialPositionY={100}
     >
+      <Box
+        sx={{
+          position: "absolute",
+          zIndex: 100,
+          display: "inline",
+          right: 0,
+        }}
+      >
+        <HourglassEmptyIcon style={{ transform: "translateY(7px)" }} />
+        <Countdown
+          key={`${boardId}-${lastPlacement}`}
+          targetDate={lastPlacement + placementCooldown}
+        />
+        <IconButton key={lastPlacement} onClick={() => setBaubleOpen()}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <TransformComponent>
         <div className="Board">
           <div className="Canvas">
