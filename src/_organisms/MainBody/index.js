@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
-import { treeDimensions } from "../../config";
+import { treeDimensions, treeStreamId } from "../../config";
 import { useEffect, useState } from "react";
 import { Button, Snackbar, Alert } from "@mui/material";
 import { functions } from "../../config/fb_config";
@@ -93,14 +93,19 @@ const MainBody = ({ sx, userData }) => {
         centerZoomedOut={false}
       >
         <TransformComponent>
-          <img
-            alt="Christmas Tree"
+          <iframe
             style={{
               transformOrigin: "top left",
               transform: `translateY(${treeDimensions.height}px) rotate(-90deg)`,
             }}
-            src={"http://192.168.1.182:8080/?action=stream"}
-          />
+            width={treeDimensions.height}
+            height={treeDimensions.width}
+            src={`https://www.youtube.com/embed/${treeStreamId}?autoplay=1&mute=1&enablejsapi=1`}
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
           <Bulbs
             userData={userData}
             visible={virtualBulbsVisible}

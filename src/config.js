@@ -18,5 +18,7 @@ export const lightAdjustment = {
   },
 };
 
+export const treeStreamId = "EYUc7BN5o9s";
+
 export const hiddenBulbs = [0, 1, 2, 3, 4, 5, 6];
 export const placementCooldown = 10_000;
