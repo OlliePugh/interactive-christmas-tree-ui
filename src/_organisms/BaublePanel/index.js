@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ref, get } from "firebase/database";
-import { resetBoard } from "../../utils/fb_funcs";
-import realtime, { functions } from "../../config/fb_config";
+// import { resetBoard } from "../../utils/fb_funcs";
+import realtime from "../../config/fb_config";
 import {
   TransformWrapper,
   TransformComponent,
@@ -28,19 +28,19 @@ const BaublePanel = ({
   const [loading, setLoading] = useState(true);
   const [lastPlacement, setLastPlacement] = useState(0);
 
-  const initCanvas = () => {
-    resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
-  };
+  // const initCanvas = () => {
+  //   resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
+  // };
 
-  // useEffect(initCanvas, []);
+  // // useEffect(initCanvas, []);
 
-  const canvasListener = async () => {
+  const canvasListener = useCallback(async () => {
     const metaDataRef = ref(realtime, `board${boardId}/metadata`);
     const result = await get(metaDataRef);
     const { height, width } = result.val();
     setBoardDimensions({ boardHeight: height, boardWidth: width });
     setLoading(false);
-  };
+  }, [boardId]);
 
   const placeCooldownCheck = () => {
     const now = Date.now();
@@ -58,7 +58,7 @@ const BaublePanel = ({
 
   useEffect(() => {
     canvasListener();
-  }, [loading]);
+  }, [loading, canvasListener]);
 
   if (loading) {
     return (

@@ -39,7 +39,7 @@ const App = () => {
           signOutCallback={signOutWrapper}
           userData={userData}
         />
-        <Box sx={{ overflow: "hidden" }}>
+        <Box sx={{ overflow: "hidden", flex: 1 }}>
           <MainBody userData={userData} />
         </Box>
         <Footer />

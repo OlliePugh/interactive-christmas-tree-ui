@@ -31,7 +31,7 @@ const WireCanvas = ({ bulbConnections, bulbOffset: { offsetX, offsetY } }) => {
       );
       context.stroke();
     });
-  }, [bulbConnections]);
+  }, [bulbConnections, offsetX, offsetY]);
 
   return <canvas style={{ opacity: 0.7 }} ref={canvasRef} />;
 };

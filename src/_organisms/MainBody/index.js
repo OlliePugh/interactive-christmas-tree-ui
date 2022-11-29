@@ -25,7 +25,7 @@ const MainBody = ({ sx, userData }) => {
   }, [toastMessage]);
 
   return (
-    <Box sx={{ ...sx }}>
+    <Box sx={{ ...sx, height: "100%" }}>
       <BaublePaper
         setBaubleOpen={setBaubleOpen}
         baubleOpen={baubleOpen}

@@ -25,7 +25,7 @@ const Countdown = ({ targetDate }) => {
     }, 1000);
 
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [num]);
 
   return <span>{num < 0 ? 0 : num}</span>;
 };
