@@ -1,26 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Microbe&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.react-transform-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Press Start 2P", cursive;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-:root {
-  --squareBgColor: #ff4500;
-  --textColor: whitesmoke;
-}
-
-.Container {
+.bauble-wrapper .Container {
   display: grid;
   place-items: center;
   height: 100vh;
@@ -28,43 +26,38 @@ body {
   background-color: rgb(4, 49, 126);
 }
 
-.Board {
+.bauble-wrapper .Board {
   width: 100vw;
   height: 100vh;
-  margin-top: 10vh;
 }
 
 /* Canvas */
-.Canvas {
+.bauble-wrapper .Canvas {
   width: 90vh;
   height: 90vh;
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: repeat(80, 1fr);
-  grid-template-rows: repeat(80, 1fr);
 }
 
 /* Loading */
-.Loading {
+.bauble-wrapper .Loading {
   width: 80vh;
   height: 80vh;
   display: grid;
   place-items: center;
 }
-.Loading_Text {
+.bauble-wrapper .Loading_Text {
   font-size: 2em;
   color: var(--textColor);
 }
 
 /* Square */
-.Square {
+.bauble-wrapper .Square {
   border: 1px solid #07070714;
 }
-.Square:hover {
+.bauble-wrapper .Square:hover {
   background-color: var(--squareBgColor) !important;
 }
 
-.Profile {
+.bauble-wrapper .Profile {
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -74,11 +67,11 @@ body {
   color: var(--textColor);
 }
 
-.Profile .Btn {
+.bauble-wrapper .Profile .Btn {
   color: var(--textColor);
 }
 
-.Tools {
+.bauble-wrapper .Tools {
   display: grid;
   place-items: center;
   position: sticky;
@@ -89,7 +82,7 @@ body {
   background-color: rgb(19, 78, 181);
 }
 
-.Auth-Button {
+.bauble-wrapper .Auth-Button {
   border: none;
   color: var(--textColor);
   background-color: transparent;
@@ -100,12 +93,12 @@ body {
   cursor: pointer;
 }
 
-.Palette {
+.bauble-wrapper .Palette {
   display: flex;
   justify-content: center;
   padding: 5px;
 }
-.Palette-item {
+.bauble-wrapper .Palette-item {
   margin: 2px;
   width: 15px;
   height: 15px;

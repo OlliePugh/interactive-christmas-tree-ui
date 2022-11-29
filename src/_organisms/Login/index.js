@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { auth } from "../../config/fb_config";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import Board from "../Canvas/Board";
+import Board from "../Board";
 
 const Login = () => {
   const [userData, setUserData] = useState(false);
@@ -12,13 +12,13 @@ const Login = () => {
     signInWithPopup(auth, provider).then((result) => {
       setUserData(result.user);
     });
-  }
+  };
 
   const signOutWrapper = () => {
     signOut(auth, provider).then((_) => {
       setUserData(false);
     });
-  }
+  };
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -42,6 +42,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;
