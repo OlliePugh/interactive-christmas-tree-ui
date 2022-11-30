@@ -1,8 +1,8 @@
 import { Box } from "@mui/system";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
-import { treeDimensions, treeStreamId } from "../../config";
-import { useEffect, useState, useRef } from "react";
+import { treeDimensions } from "../../config";
+import { useEffect, useState } from "react";
 import { Button, Snackbar, Alert } from "@mui/material";
 import { functions } from "../../config/fb_config";
 import { resetLights } from "../../utils/fb_funcs";

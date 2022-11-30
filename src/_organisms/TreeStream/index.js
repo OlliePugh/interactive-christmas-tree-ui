@@ -35,7 +35,7 @@ const TreeStream = () => {
         });
       }
     }
-  });
+  }, []);
 
   useEffect(() => {
     startStream();
@@ -43,7 +43,7 @@ const TreeStream = () => {
     return () => {
       hlsRef.current?.destroy();
     };
-  }, []);
+  }, [startStream]);
 
   return (
     <video
