@@ -18,7 +18,8 @@ export const lightAdjustment = {
   },
 };
 
-export const videoStreamUrl = "https://35.228.255.175/proxied/";
+export const videoStreamUrl =
+  "https://stream.interactivechristmastree.com/proxied/";
 
 export const hiddenBulbs = [0, 1, 2, 3, 4, 5, 6];
 export const placementCooldown = 10_000;
