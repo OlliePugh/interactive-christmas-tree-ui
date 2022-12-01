@@ -4,8 +4,6 @@ import Bulbs from "../Bulbs";
 import { treeDimensions } from "../../config";
 import { useEffect, useState } from "react";
 import { Button, Snackbar, Alert } from "@mui/material";
-import { functions } from "../../config/fb_config";
-import { resetLights } from "../../utils/fb_funcs";
 import BaublePaper from "../BaublePaper";
 import Countdown from "../../_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -74,13 +72,13 @@ const MainBody = ({ sx, userData }) => {
       >
         Hide Overlay
       </Button>
-      <Button
+      {/* <Button
         onClick={() => {
           resetLights(functions, { length: 50 });
         }}
       >
         Reset Lights
-      </Button>
+      </Button> */}
       <HourglassEmptyIcon style={{ transform: "translateY(7px)" }} />
       <Countdown
         key={`0-${lastBulbPlacement}`}
