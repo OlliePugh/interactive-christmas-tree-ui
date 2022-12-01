@@ -112,12 +112,20 @@ const Bulbs = ({
           }
         />
       ))}
-      <Bauble id={1} openBauble={openBauble} />
-      <Bauble id={2} openBauble={openBauble} sx={{ top: 0, right: 0 }} />
+      <Bauble
+        id={1}
+        openBauble={openBauble}
+        sx={{ top: "590px", left: "400px", opacity: "60%" }}
+      />
+      <Bauble
+        id={2}
+        openBauble={openBauble}
+        sx={{ top: "950px", left: "160px", opacity: "60%" }}
+      />
       <Bauble
         id={3}
         openBauble={openBauble}
-        sx={{ top: "50%", right: "50%" }}
+        sx={{ top: "230px", left: "280px", opacity: "60%" }}
       />
       <WireCanvas
         bulbConnections={scaledBulbs}

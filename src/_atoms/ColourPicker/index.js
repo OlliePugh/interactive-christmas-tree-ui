@@ -10,7 +10,7 @@ const ColourPicker = ({
   return (
     <Box
       position={"absolute"}
-      zIndex={10}
+      zIndex={11}
       display={"flex"}
       flexDirection="row"
       sx={{
