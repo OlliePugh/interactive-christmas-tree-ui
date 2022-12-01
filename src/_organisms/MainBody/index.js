@@ -9,6 +9,7 @@ import Countdown from "../../_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import { placementCooldown } from "../../config";
 import TreeStream from "../TreeStream";
+import NavigationSphere from "../../_atoms/NavigationCircle";
 
 const MainBody = ({ sx, userData }) => {
   const [virtualBulbsVisible, setVirtualBulbsVisible] = useState(true);
@@ -84,6 +85,7 @@ const MainBody = ({ sx, userData }) => {
         key={`0-${lastBulbPlacement}`}
         targetDate={lastBulbPlacement + placementCooldown}
       />
+      <NavigationSphere />
       <TransformWrapper
         limitToBounds={false}
         minScale={0.2}

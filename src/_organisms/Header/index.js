@@ -22,7 +22,19 @@ const Header = ({ signInCallback, signOutCallback, userData }) => {
         }}
         variant="h4"
       >
-        The Internet's Christmas Tree
+        The Interactive Christmas Tree{" "}
+        <Typography
+          sx={{
+            display: "block",
+            flex: 1,
+            color: "white",
+            fontWeight: "thin",
+            fontStyle: "italic",
+          }}
+          variant="caption"
+        >
+          By Ollie Q
+        </Typography>
       </Typography>
       <AccountActions
         signInCallback={signInCallback}
