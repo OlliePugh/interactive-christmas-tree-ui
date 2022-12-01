@@ -7,7 +7,7 @@ const Bauble = ({ openBauble, id, sx }) => {
       onClick={() => openBauble(id)}
     >
       <img
-        height={"100px"}
+        height={"80px"}
         alt="Bauble"
         src={require("../../assetts/bauble.png")}
       />
