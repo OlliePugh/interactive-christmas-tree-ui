@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { auth } from "../../config/fb_config";
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
 import Board from "../Board";
 
 const Login = () => {
@@ -9,7 +9,7 @@ const Login = () => {
   const provider = new GoogleAuthProvider();
 
   const signInWrapper = () => {
-    signInWithPopup(auth, provider).then((result) => {
+    signInWithRedirect(auth, provider).then((result) => {
       setUserData(result.user);
     });
   };
