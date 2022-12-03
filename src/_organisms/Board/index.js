@@ -57,6 +57,8 @@ const Board = ({
 
   useEffect(() => {
     if (currentClickPos) {
+      // TODO used for seeing where a click is (for banning purposes)
+      // console.log(width * currentClickPos.row + currentClickPos.col);
       setCurrentOpenPixel(currentClickPos);
     }
   }, [currentClickPos, setCurrentOpenPixel]);
@@ -147,7 +149,6 @@ const Board = ({
     const rect = canvasRef.current.getBoundingClientRect(); // abs. size of element
     const scaleX = canvasRef.current.width / rect.width; // relationship bitmap vs. element for x
     const scaleY = canvasRef.current.height / rect.height; // relationship bitmap vs. element for y
-
     setCurrentClickPos({
       col: Math.floor(((event.clientX - rect.left) * scaleX - 1) / 10), // scale mouse coordinates after they have
       row: Math.floor(((event.clientY - rect.top) * scaleY - 1) / 10), // -1 to take into account the 1px border
