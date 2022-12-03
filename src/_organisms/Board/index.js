@@ -8,7 +8,7 @@ import { writeData } from "../../utils/fb_funcs";
 import { functions } from "../../config/fb_config";
 
 const rgbToHex = (r, g, b) => {
-  if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
+  if (r > 255 || g > 255 || b > 255) throw Error("Invalid color component");
   return "#" + ((r << 16) | (g << 8) | b).toString(16);
 };
 
@@ -25,15 +25,9 @@ const Board = ({
   const canvasRef = useRef();
   const currentOpenPixel = useRef();
 
-  useEffect(() => {
-    if (currentClickPos) {
-      setCurrentOpenPixel(currentClickPos);
-    }
-  }, [currentClickPos]);
-
   const setCurrentOpenPixel = useCallback(({ col, row }) => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
     // revert old pixel if it exists
     if (currentOpenPixel.current) {
       const oldPixel = context.getImageData(
@@ -60,6 +54,12 @@ const Board = ({
 
     currentOpenPixel.current = { col, row };
   }, []);
+
+  useEffect(() => {
+    if (currentClickPos) {
+      setCurrentOpenPixel(currentClickPos);
+    }
+  }, [currentClickPos, setCurrentOpenPixel]);
 
   const setColour = async (colour) => {
     if (!placeCooldownCheck()) {
