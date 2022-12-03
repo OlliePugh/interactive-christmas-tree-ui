@@ -68,8 +68,8 @@ const MainBody = ({ sx, userData }) => {
       </Snackbar>
       <Box borderBottom={"1px solid black"}>
         <Typography display={"inline"}>
-          Why do I have to sign in? - All you need is a google account, this is
-          just so I can enforce a cooldown
+          <strong>Why do I have to sign in?</strong>- All you need is a google
+          account, this is just so I can enforce a cooldown
         </Typography>
         <Button
           onClick={() => {
