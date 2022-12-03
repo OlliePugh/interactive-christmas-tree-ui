@@ -33,7 +33,15 @@ const Header = ({ signInCallback, signOutCallback, userData }) => {
           }}
           variant="caption"
         >
-          By Ollie Q
+          By Ollie Q - Hourly updates on Twitter{" "}
+          <a
+            href="https://twitter.com/interactivexmas"
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none", color: "lightblue" }}
+          >
+            @InteractiveXmas
+          </a>
         </Typography>
       </Typography>
       <AccountActions
