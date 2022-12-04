@@ -11,9 +11,11 @@ import {
 } from "../../utils/fb_funcs";
 import axios from "axios";
 
+const zeroPad = (num, places) => String(num).padStart(places, "0");
+
 const rgbToHex = (r, g, b) => {
   if (r > 255 || g > 255 || b > 255) throw Error("Invalid color component");
-  return "#" + ((r << 16) | (g << 8) | b).toString(16);
+  return "#" + zeroPad(((r << 16) | (g << 8) | b).toString(16), 6);
 };
 
 const Board = ({
@@ -116,7 +118,7 @@ const Board = ({
       const offset = 54;
       for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
-          let currentIndex = offset + counter++ * 3;
+          let currentIndex = offset + counter * 3;
 
           const colour = rgbToHex(
             entireBoard[currentIndex + 2],
@@ -127,6 +129,7 @@ const Board = ({
           const col = counter % width;
           const row = Math.floor(counter / width);
           setPixelColour(row, col, colour);
+          counter += 1;
         }
       }
     },
