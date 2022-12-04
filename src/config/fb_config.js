@@ -6,6 +6,7 @@ import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import { connectStorageEmulator, getStorage } from "@firebase/storage";
 import { production } from "../config";
+import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -28,6 +29,7 @@ const auth = getAuth(app);
 const realtime = getDatabase(app);
 const functions = getFunctions(app, "europe-west1");
 const storage = getStorage(app);
+const firestore = getFirestore(app);
 
 const analytics = getAnalytics(app);
 
@@ -36,6 +38,7 @@ if (!production) {
   connectFunctionsEmulator(functions, "192.168.1.85", 5001);
   connectDatabaseEmulator(realtime, "localhost", 9000);
   connectStorageEmulator(storage, "localhost", 9199);
+  connectFirestoreEmulator(firestore, "localhost", 8080);
 }
-export { functions, analytics, auth, storage };
+export { functions, analytics, auth, storage, firestore };
 export default realtime;

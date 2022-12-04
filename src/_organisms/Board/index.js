@@ -1,11 +1,15 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ref, get, onChildChanged } from "firebase/database";
-import realtime from "../../config/fb_config";
+import { ref, onChildChanged } from "firebase/database";
+import realtime, { functions } from "../../config/fb_config";
 import ColourPicker from "../../_atoms/ColourPicker";
 import OutsideClickHandler from "react-outside-click-handler";
 import { baubleColours } from "../../utils/palette";
-import { writeData } from "../../utils/fb_funcs";
-import { functions } from "../../config/fb_config";
+import {
+  getBaubleBmpUrl,
+  getBaubleRecentChanges,
+  writeData,
+} from "../../utils/fb_funcs";
+import axios from "axios";
 
 const rgbToHex = (r, g, b) => {
   if (r > 255 || g > 255 || b > 255) throw Error("Invalid color component");
@@ -108,13 +112,25 @@ const Board = ({
 
   const fillEntireBoard = useCallback(
     (entireBoard) => {
-      Object.entries(entireBoard).forEach(([index, pixel]) => {
-        const col = index % width;
-        const row = Math.floor(index / width);
-        setPixelColour(row, col, pixel.colour);
-      });
+      let counter = 0;
+      const offset = 54;
+      for (let i = 0; i < width; i++) {
+        for (let j = 0; j < height; j++) {
+          let currentIndex = offset + counter++ * 3;
+
+          const colour = rgbToHex(
+            entireBoard[currentIndex + 2],
+            entireBoard[currentIndex + 1],
+            entireBoard[currentIndex]
+          );
+
+          const col = counter % width;
+          const row = Math.floor(counter / width);
+          setPixelColour(row, col, colour);
+        }
+      }
     },
-    [width]
+    [width, height]
   );
 
   useEffect(() => {
@@ -131,9 +147,17 @@ const Board = ({
     // create listeners
     // get entire board
     (async () => {
-      const fullBoard = ref(realtime, `board${boardId}/data`);
-      const result = await get(fullBoard);
-      fillEntireBoard(result.val());
+      const url = await getBaubleBmpUrl(boardId);
+      const result = await axios.get(url, { responseType: "arraybuffer" });
+
+      fillEntireBoard(new Uint8Array(result.data));
+      const recentChanges = await getBaubleRecentChanges(boardId); // get changes since the BMP was created
+      recentChanges.forEach((doc) => {
+        const data = doc.data();
+        const col = data.squareId % width;
+        const row = Math.floor(data.squareId / width);
+        setPixelColour(row, col, data.colour);
+      });
       const dbRef = ref(realtime, `board${boardId}/data`);
       onChildChanged(dbRef, (snapshot) => {
         const lightId = snapshot.key;
