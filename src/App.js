@@ -2,7 +2,7 @@ import Header from "./_organisms/Header";
 import { Box } from "@mui/system";
 import Footer from "./_organisms/Footer";
 import MainBody from "./_organisms/MainBody";
-import { GoogleAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "./config/fb_config";
 import { useState, useEffect } from "react";
 import { ThemeProvider } from "@mui/material";
@@ -13,7 +13,7 @@ const App = () => {
   const provider = new GoogleAuthProvider();
 
   const signInWrapper = () => {
-    signInWithRedirect(auth, provider).then((result) => {
+    signInWithPopup(auth, provider).then((result) => {
       setUserData(result.user);
     });
   };
