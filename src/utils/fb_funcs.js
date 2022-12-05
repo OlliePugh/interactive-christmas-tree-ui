@@ -6,7 +6,7 @@ import {
 } from "@firebase/storage";
 import { ref, onValue, get } from "firebase/database";
 import { httpsCallable } from "firebase/functions";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { firestore } from "../config/fb_config";
 
 const listenData = (db, path) => {
@@ -77,7 +77,7 @@ const getBaubleRecentChanges = async (boardId) => {
   const recentChangesRef = collection(firestore, `board${boardId}`);
   const q = query(
     recentChangesRef,
-    where("time", ">", new Date(metaData.timeCreated))
+    where("time", ">", new Date(metaData.timeCreated), orderBy("time"))
   );
   const querySnapshot = await getDocs(q);
   return querySnapshot;
