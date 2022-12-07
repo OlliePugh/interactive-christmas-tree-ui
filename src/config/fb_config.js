@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
@@ -30,8 +29,6 @@ const realtime = getDatabase(app);
 const functions = getFunctions(app, "europe-west1");
 const storage = getStorage(app);
 const firestore = getFirestore(app);
-
-// const analytics = getAnalytics(app);
 
 if (!production) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
