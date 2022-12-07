@@ -1,12 +1,44 @@
 import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Typography, Link } from "@mui/material";
 import { colours } from "../../utils/palette";
 
 const Footer = () => {
   return (
-    <Box backgroundColor={colours.PRIMARY2}>
-      <Typography align="right" marginRight="10px" color={"white"}>
-        Copyright © 2022 Oliver Pugh{" "}
+    <Box display={"inline-flex"} backgroundColor={colours.PRIMARY2}>
+      <Link
+        style={{ textDecoration: "none" }}
+        href="https://www.iubenda.com/privacy-policy/33877500"
+      >
+        <Typography
+          display={"inline"}
+          align="left"
+          marginRight="10px"
+          color={"white"}
+        >
+          Privacy Policy
+        </Typography>
+      </Link>
+      <Link
+        style={{ textDecoration: "none" }}
+        href="https://www.iubenda.com/privacy-policy/33877500/cookie-policy"
+      >
+        <Typography
+          display={"inline"}
+          align="left"
+          marginRight="10px"
+          color={"white"}
+        >
+          Cookie Policy
+        </Typography>
+      </Link>
+      <Typography
+        align="right"
+        marginRight="10px"
+        color={"white"}
+        display={"inline"}
+        flex={1}
+      >
+        Copyright © 2022 Oliver Pugh
       </Typography>
     </Box>
   );
