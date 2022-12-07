@@ -8,6 +8,7 @@ const Footer = () => {
       <Link
         style={{ textDecoration: "none" }}
         href="https://www.iubenda.com/privacy-policy/33877500"
+        target={"_blank"}
       >
         <Typography
           display={"inline"}
@@ -21,6 +22,7 @@ const Footer = () => {
       <Link
         style={{ textDecoration: "none" }}
         href="https://www.iubenda.com/privacy-policy/33877500/cookie-policy"
+        target={"_blank"}
       >
         <Typography
           display={"inline"}
