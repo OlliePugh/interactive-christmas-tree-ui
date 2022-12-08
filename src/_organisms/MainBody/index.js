@@ -3,7 +3,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
 import { treeDimensions } from "../../config";
 import { useEffect, useState } from "react";
-import { Button, Snackbar, Alert, Typography } from "@mui/material";
+import { Button, Snackbar, Alert } from "@mui/material";
 import BaublePaper from "../BaublePaper";
 import Countdown from "../../_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -67,10 +67,6 @@ const MainBody = ({ sx, userData }) => {
         </Alert>
       </Snackbar>
       <Box borderBottom={"1px solid black"}>
-        <Typography display={"inline"}>
-          <strong>Why do I have to sign in?</strong>- All you need is a google
-          account, this is just so I can enforce a cooldown
-        </Typography>
         <Button
           onClick={() => {
             setVirtualBulbsVisible(!virtualBulbsVisible);

@@ -105,7 +105,7 @@ const Bulbs = ({
               ? broadcastBulbColour
               : () => {
                   setToastMessage({
-                    message: "You need to be logged in to do that!",
+                    message: "You need to be logged in to change the lights!",
                     severity: "error",
                   });
                 }
