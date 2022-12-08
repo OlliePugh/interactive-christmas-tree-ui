@@ -5,8 +5,10 @@ import MainBody from "./_organisms/MainBody";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "./config/fb_config";
 import { useState, useEffect } from "react";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider, Typography } from "@mui/material";
 import { theme } from "./theme";
+import FaqPage from "./_organisms/FaqPage";
+import { colours } from "./utils/palette";
 
 const App = () => {
   const [userData, setUserData] = useState(false);
@@ -42,8 +44,23 @@ const App = () => {
         <Box sx={{ overflow: "hidden", flex: 1 }}>
           <MainBody userData={userData} />
         </Box>
-        <Footer />
+        <Box
+          style={{ backgroundColor: colours.SECONDARY1 }}
+          paddingBottom={"3rem"}
+        >
+          <Typography
+            marginTop="1rem"
+            paddingLeft={"1rem"}
+            variant="h4"
+            color="white"
+            fontWeight={600}
+          >
+            What is this?
+          </Typography>
+        </Box>
       </Box>
+      <FaqPage />
+      <Footer />
     </ThemeProvider>
   );
 };

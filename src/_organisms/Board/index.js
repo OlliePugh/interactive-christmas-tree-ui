@@ -211,7 +211,7 @@ const Board = ({
             ? (event) => canvasClick(event)
             : () =>
                 setToastMessage({
-                  message: "You need to be logged in to do that!",
+                  message: "You need to be logged in draw pixel art!",
                   severity: "error",
                 })
         }

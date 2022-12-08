@@ -1,0 +1,20 @@
+{
+    "What can I control?": {
+        "answer": "You can click the lights on the tree and then select the colour that you want that specific light to be. You can also click the baubles on the tree, this will then open a popup window where you can draw pixel art."
+    },
+    "Why do the lights keep changing?": {
+        "answer": "These are other people in the world changing the lights from their own home! The changes will appear on your screen in real time, if you don't like the pattern they have made or the art they have drawn, change it!"
+    },
+    "Can I draw anything?": {
+        "answer": "Pretty much, I really don't want to intervene so that this is kind of like a social experiement (very similar to r/place), but if things are added that are racist, sexist, hate speech etc, they will be removed manually and the account that created it will be banned. Basically, don't do anything stupid."
+    },
+    "Why do I need to log in?": {
+        "answer": "You can view the tree and look at the pixel art without having to log in! I ask you to login before being able to modify the tree so that I can enforce a cool down, (i.e. change a colour every 5 seconds) as if the site was to reach a lot of people I may want to restrict how often people can change things so the baubles dont just become one huge mess!"
+    },
+    "I don't see a video": {
+        "answer": "The video stream is a little bit flakey and sometimes doesnt work (especially on mobile) you can still see the results at @InteractiveXmas on Twitter but wont be able to see the tree in real time! Sorry! You can always spend the time waiting for it to load by drawing an angry pixel art face on a bauble to show me you are not happy"
+    },
+    "Why does this exist?": {
+        "answer": "I make interactive projects and post them on social media to try and share my ideas with the world, and also in the hope that it can show people that engineering and programming is not always boring and can be lots of fun, you are in control of what you make, so always make something fun! \n You can find lots of my other projects on my YouTube www.youtube.com/@ollieq (its also on the blue button in the bottom right)"
+    }
+}

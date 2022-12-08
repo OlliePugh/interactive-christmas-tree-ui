@@ -4,7 +4,11 @@ import { colours } from "../../utils/palette";
 
 const Footer = () => {
   return (
-    <Box display={"inline-flex"} backgroundColor={colours.PRIMARY2}>
+    <Box
+      display={"inline-flex"}
+      style={{ width: "100%" }}
+      backgroundColor={colours.PRIMARY2}
+    >
       <Link
         style={{ textDecoration: "none" }}
         href="https://www.iubenda.com/privacy-policy/33877500"
