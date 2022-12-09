@@ -4,7 +4,6 @@ import Faq from "../../_atoms/Faq";
 import faqContent from "../../faq.json";
 
 const FaqPage = () => {
-  console.log(faqContent);
   return (
     <Box marginX={"1rem"}>
       <Typography marginY={"1rem"}>

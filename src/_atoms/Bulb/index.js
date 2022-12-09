@@ -27,6 +27,7 @@ const Bulb = ({ sx, id, colour, setColourCallback }) => {
       )}
       <Box
         onClick={() => {
+          // console.log(id);
           setPaletteOpen(true);
         }}
         sx={{ ...sx, opacity: 0.7, zIndex: 5 }}
