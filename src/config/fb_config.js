@@ -4,6 +4,7 @@ import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import { connectStorageEmulator, getStorage } from "@firebase/storage";
+import { getAnalytics } from "@firebase/analytics";
 import { production } from "../config";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
@@ -37,5 +38,18 @@ if (!production) {
   connectStorageEmulator(storage, "localhost", 9199);
   connectFirestoreEmulator(firestore, "localhost", 8080);
 }
-export { functions, auth, storage, firestore };
+
+let analytics;
+
+const enableAnalytics = () => {
+  analytics = getAnalytics(app);
+};
+
+if (window.analyticsEnabled) {
+  enableAnalytics();
+}
+
+window.addEventListener("analyticsEnabled", enableAnalytics, false);
+
+export { functions, auth, storage, firestore, analytics };
 export default realtime;
