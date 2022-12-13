@@ -65,6 +65,7 @@ const Board = ({
     if (currentClickPos) {
       // TODO used for seeing where a click is (for banning purposes)
       // console.log(width * currentClickPos.row + currentClickPos.col);
+      // console.log(boardId);
       setCurrentOpenPixel(currentClickPos);
     }
   }, [currentClickPos, setCurrentOpenPixel]);
