@@ -173,16 +173,6 @@ const Board = ({
     })();
   }, [boardId, fillEntireBoard, height, width]);
 
-  const canvasClick = (event) => {
-    const rect = canvasRef.current.getBoundingClientRect(); // abs. size of element
-    const scaleX = canvasRef.current.width / rect.width; // relationship bitmap vs. element for x
-    const scaleY = canvasRef.current.height / rect.height; // relationship bitmap vs. element for y
-    setCurrentClickPos({
-      col: Math.floor(((event.clientX - rect.left) * scaleX - 1) / 10), // scale mouse coordinates after they have
-      row: Math.floor(((event.clientY - rect.top) * scaleY - 1) / 10), // -1 to take into account the 1px border
-    });
-  };
-
   return (
     <>
       {!loaded && (
@@ -207,14 +197,11 @@ const Board = ({
         </OutsideClickHandler>
       )}
       <canvas
-        onClick={
-          userData
-            ? (event) => canvasClick(event)
-            : () =>
-                setToastMessage({
-                  message: "You need to be logged in draw pixel art!",
-                  severity: "error",
-                })
+        onClick={() =>
+          setToastMessage({
+            message: "The project is now read-only!",
+            severity: "error",
+          })
         }
         style={{
           border: "1px solid black",
