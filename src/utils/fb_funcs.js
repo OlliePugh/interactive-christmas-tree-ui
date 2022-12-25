@@ -28,11 +28,11 @@ const readOnce = (db, path) => {
   });
 };
 
-const writeData = async (functions, data) => {
-  const changeSquare = httpsCallable(functions, "changeSquare");
-  const result = await changeSquare(data);
-  console.log(result);
-};
+// const writeData = async (functions, data) => {
+//   const changeSquare = httpsCallable(functions, "changeSquare");
+//   const result = await changeSquare(data);
+//   console.log(result);
+// };
 
 const resetBoard = async (functions, data) => {
   const resetBoardFunction = httpsCallable(functions, "resetBoard");
@@ -88,7 +88,7 @@ export {
   getBaubleBmpUrl,
   listenData,
   readOnce,
-  writeData,
+  // writeData,
   resetBoard,
   resetLights,
   writeLights,

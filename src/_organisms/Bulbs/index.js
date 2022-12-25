@@ -6,10 +6,8 @@ import { lightAdjustment } from "../../config";
 import { useEffect, useMemo, useRef, useState } from "react";
 import realtime from "../../config/fb_config";
 import { get, ref, onChildChanged } from "firebase/database";
-import { placementCooldown } from "../../config";
+// import { placementCooldown } from "../../config";
 import Bauble from "../Bauble";
-import { writeLights } from "../../utils/fb_funcs";
-import { functions } from "../../config/fb_config";
 import { hiddenBulbs } from "../../config";
 
 const Bulbs = ({
@@ -47,28 +45,28 @@ const Bulbs = ({
     }
   };
 
-  const broadcastBulbColour = (id, colour) => {
-    if (!placeCooldownCheck()) {
-      // cooldown not finished
-      return;
-    }
-    writeLights(functions, { id, colour });
-    setBulbColour(id, colour);
-  };
+  // const broadcastBulbColour = (id, colour) => {
+  //   if (!placeCooldownCheck()) {
+  //     // cooldown not finished
+  //     return;
+  //   }
+  //   writeLights(functions, { id, colour });
+  //   setBulbColour(id, colour);
+  // };
 
-  const placeCooldownCheck = () => {
-    const now = Date.now();
-    if (now - lastPlacement > placementCooldown) {
-      setLastPlacement(now);
-      return true;
-    } else {
-      setToastMessage({
-        message: "Cooldown not finished...",
-        severity: "error",
-      });
-      return false;
-    }
-  };
+  // const placeCooldownCheck = () => {
+  //   const now = Date.now();
+  //   if (now - lastPlacement > placementCooldown) {
+  //     setLastPlacement(now);
+  //     return true;
+  //   } else {
+  //     setToastMessage({
+  //       message: "Cooldown not finished...",
+  //       severity: "error",
+  //     });
+  //     return false;
+  //   }
+  // };
 
   const scaledBulbs = useMemo(() => {
     return lightConfig
@@ -100,15 +98,11 @@ const Bulbs = ({
             left: x,
             top: y,
           }}
-          setColourCallback={
-            userData
-              ? broadcastBulbColour
-              : () => {
-                  setToastMessage({
-                    message: "You need to be logged in to change the lights!",
-                    severity: "error",
-                  });
-                }
+          setColourCallback={() =>
+            setToastMessage({
+              message: "This project is now read only!",
+              severity: "error",
+            })
           }
         />
       ))}

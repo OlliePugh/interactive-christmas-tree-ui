@@ -4,19 +4,7 @@ import realtime, { functions } from "../../config/fb_config";
 import ColourPicker from "../../_atoms/ColourPicker";
 import OutsideClickHandler from "react-outside-click-handler";
 import { baubleColours } from "../../utils/palette";
-import {
-  getBaubleBmpUrl,
-  getBaubleRecentChanges,
-  writeData,
-} from "../../utils/fb_funcs";
-import axios from "axios";
-
-const zeroPad = (num, places) => String(num).padStart(places, "0");
-
-const rgbToHex = (r, g, b) => {
-  if (r > 255 || g > 255 || b > 255) throw Error("Invalid color component");
-  return "#" + zeroPad(((r << 16) | (g << 8) | b).toString(16), 6);
-};
+// import { writeData } from "../../utils/fb_funcs";
 
 const Board = ({
   width,
@@ -70,25 +58,24 @@ const Board = ({
     }
   }, [currentClickPos, setCurrentOpenPixel]);
 
-  const setColour = async (colour) => {
-    if (!placeCooldownCheck()) {
-      // cooldown not finished
-      return;
-    }
+  // const setColour = async (colour) => {
+  //   if (!placeCooldownCheck()) {
+  //     // cooldown not finished
+  //     return;
+  //   }
 
-    const id = width * currentClickPos.row + currentClickPos.col;
-    currentOpenPixel.current = null;
-    setPixelColour(currentClickPos.row, currentClickPos.col, colour);
-    try {
-      writeData(functions, {
-        id,
-        boardId,
-        colour,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  //   const id = width * currentClickPos.row + currentClickPos.col;
+  //   setPixelColour(currentClickPos.row, currentClickPos.col, colour);
+  //   try {
+  //     writeData(functions, {
+  //       id,
+  //       boardId,
+  //       colour,
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   const setPixelColour = (row, col, colour) => {
     const canvas = canvasRef.current;
@@ -173,15 +160,16 @@ const Board = ({
     })();
   }, [boardId, fillEntireBoard, height, width]);
 
-  const canvasClick = (event) => {
-    const rect = canvasRef.current.getBoundingClientRect(); // abs. size of element
-    const scaleX = canvasRef.current.width / rect.width; // relationship bitmap vs. element for x
-    const scaleY = canvasRef.current.height / rect.height; // relationship bitmap vs. element for y
-    setCurrentClickPos({
-      col: Math.floor(((event.clientX - rect.left) * scaleX - 1) / 10), // scale mouse coordinates after they have
-      row: Math.floor(((event.clientY - rect.top) * scaleY - 1) / 10), // -1 to take into account the 1px border
-    });
-  };
+  // const canvasClick = (event) => {
+  //   const rect = canvasRef.current.getBoundingClientRect(); // abs. size of element
+  //   const scaleX = canvasRef.current.width / rect.width; // relationship bitmap vs. element for x
+  //   const scaleY = canvasRef.current.height / rect.height; // relationship bitmap vs. element for y
+
+  //   setCurrentClickPos({
+  //     col: Math.floor(((event.clientX - rect.left) * scaleX - 1) / 10), // scale mouse coordinates after they have
+  //     row: Math.floor(((event.clientY - rect.top) * scaleY - 1) / 10), // -1 to take into account the 1px border
+  //   });
+  // };
 
   return (
     <>
@@ -197,7 +185,7 @@ const Board = ({
               left: `${currentClickPos.col * 10}px`,
               top: `${currentClickPos.row * 10}px`,
             }}
-            changeColour={setColour}
+            // changeColour={}
             offset={{
               xOffset: -(Object.keys(baubleColours).length * 12) / 2,
               yOffset: -20,
@@ -207,14 +195,11 @@ const Board = ({
         </OutsideClickHandler>
       )}
       <canvas
-        onClick={
-          userData
-            ? (event) => canvasClick(event)
-            : () =>
-                setToastMessage({
-                  message: "You need to be logged in draw pixel art!",
-                  severity: "error",
-                })
+        onClick={() =>
+          setToastMessage({
+            message: "This project is now read only!",
+            severity: "error",
+          })
         }
         style={{
           border: "1px solid black",
