@@ -8,7 +8,6 @@ import BaublePaper from "../BaublePaper";
 import Countdown from "../../_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import { placementCooldown } from "../../config";
-import TreeStream from "../TreeStream";
 import NavigationSphere from "../../_atoms/NavigationCircle";
 
 const MainBody = ({ sx, userData }) => {
@@ -96,7 +95,11 @@ const MainBody = ({ sx, userData }) => {
         centerZoomedOut={false}
       >
         <TransformComponent>
-          <TreeStream />
+          <img
+            height={1280}
+            alt="Bauble"
+            src={require("../../assetts/tree.jpeg")}
+          />
           <Bulbs
             userData={userData}
             visible={virtualBulbsVisible}

@@ -1,14 +1,9 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ref, onChildChanged } from "firebase/database";
-import realtime, { functions } from "../../config/fb_config";
+import { functions } from "../../config/fb_config";
 import ColourPicker from "../../_atoms/ColourPicker";
 import OutsideClickHandler from "react-outside-click-handler";
 import { baubleColours } from "../../utils/palette";
-import {
-  getBaubleBmpUrl,
-  getBaubleRecentChanges,
-  writeData,
-} from "../../utils/fb_funcs";
+import { getBaubleBmpUrl, writeData } from "../../utils/fb_funcs";
 import axios from "axios";
 
 const zeroPad = (num, places) => String(num).padStart(places, "0");
@@ -155,20 +150,21 @@ const Board = ({
       const result = await axios.get(url, { responseType: "arraybuffer" });
 
       fillEntireBoard(new Uint8Array(result.data));
-      const recentChanges = await getBaubleRecentChanges(boardId); // get changes since the BMP was created
-      recentChanges.forEach((doc) => {
-        const data = doc.data();
-        const col = data.squareId % width;
-        const row = Math.floor(data.squareId / width);
-        setPixelColour(row, col, data.colour);
-      });
-      const dbRef = ref(realtime, `board${boardId}/data`);
-      onChildChanged(dbRef, (snapshot) => {
-        const lightId = snapshot.key;
-        const col = lightId % width;
-        const row = Math.floor(lightId / width);
-        setPixelColour(row, col, snapshot.val().colour);
-      });
+
+      // const recentChanges = await getBaubleRecentChanges(boardId); // get changes since the BMP was created
+      // recentChanges.forEach((doc) => {
+      //   const data = doc.data();
+      //   const col = data.squareId % width;
+      //   const row = Math.floor(data.squareId / width);
+      //   setPixelColour(row, col, data.colour);
+      // });
+      // const dbRef = ref(realtime, `board${boardId}/data`);
+      // onChildChanged(dbRef, (snapshot) => {
+      //   const lightId = snapshot.key;
+      //   const col = lightId % width;
+      //   const row = Math.floor(lightId / width);
+      //   setPixelColour(row, col, snapshot.val().colour);
+      // });
       setLoaded(true);
     })();
   }, [boardId, fillEntireBoard, height, width]);

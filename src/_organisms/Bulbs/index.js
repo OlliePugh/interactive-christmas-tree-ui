@@ -5,7 +5,7 @@ import lightConfig from "../../light_config.json";
 import { lightAdjustment } from "../../config";
 import { useEffect, useMemo, useRef, useState } from "react";
 import realtime from "../../config/fb_config";
-import { get, ref, onChildChanged } from "firebase/database";
+import { get, ref } from "firebase/database";
 import Bauble from "../Bauble";
 import { hiddenBulbs } from "../../config";
 
@@ -28,21 +28,21 @@ const Bulbs = ({
       const result = await get(lightsRef);
       const lights = result.val();
       setBulbsColours(lights);
-      const dbRef = ref(realtime, `lights/data`);
-      onChildChanged(dbRef, (snapshot) => {
-        const lightId = Number(snapshot.key);
-        setBulbColour(lightId, snapshot.val());
-      });
+      // const dbRef = ref(realtime, `lights/data`);
+      // onChildChanged(dbRef, (snapshot) => {
+      //   const lightId = Number(snapshot.key);
+      //   setBulbColour(lightId, snapshot.val());
+      // });
     })();
   }, []);
 
-  const setBulbColour = (id, colour) => {
-    if (bulbsColoursRef.current) {
-      const bulbsCopy = [...bulbsColoursRef.current];
-      bulbsCopy[id] = colour;
-      setBulbsColours(bulbsCopy);
-    }
-  };
+  // const setBulbColour = (id, colour) => {
+  //   if (bulbsColoursRef.current) {
+  //     const bulbsCopy = [...bulbsColoursRef.current];
+  //     bulbsCopy[id] = colour;
+  //     setBulbsColours(bulbsCopy);
+  //   }
+  // };
 
   const scaledBulbs = useMemo(() => {
     return lightConfig
