@@ -1,3 +1,5 @@
 # Internet Christmas Tree!
 
-Used [Reddit Place Clone](https://github.com/dovenokan/reddit-place-clone) by dovenokan as a starting point! Thanks!
+The UI for the (Interactive Christmas Tree)[www.interactivechristmastree.com] project.
+
+
