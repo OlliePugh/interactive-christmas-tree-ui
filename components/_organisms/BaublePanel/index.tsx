@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ref, get } from "firebase/database";
 // import { resetBoard } from "../../utils/fb_funcs";
-import realtime from "@/config/fb_config";
+import realtime, { functions } from "@/config/fb_config";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { placementCooldown } from "@/config/config";
 import Board from "@/components/_organisms/Board";
@@ -10,8 +10,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import Countdown from "@/components/_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import { User } from "firebase/auth";
+import { resetBoard } from "@/utils/fb_funcs";
 
-interface BaublePanel {
+interface BaublePanelProps {
   setBaubleOpen: (id: number | null) => void;
   userData: User | boolean;
   boardId: number;
@@ -29,7 +30,7 @@ const BaublePanel = ({
   userData,
   boardId,
   setToastMessage,
-}: BaublePanel) => {
+}: BaublePanelProps) => {
   // could use an array of refs here to have access to each squares value
   const [{ boardWidth, boardHeight }, setBoardDimensions] = useState({
     boardWidth: null,
@@ -38,15 +39,16 @@ const BaublePanel = ({
   const [loading, setLoading] = useState(true);
   const [lastPlacement, setLastPlacement] = useState(0);
 
-  // const initCanvas = () => {
-  //   resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
-  // };
+  const initCanvas = () => {
+    resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
+  };
 
-  // // useEffect(initCanvas, []);
+  useEffect(initCanvas, []);
 
   const canvasListener = useCallback(async () => {
     const metaDataRef = ref(realtime, `board${boardId}/metadata`);
     const result = await get(metaDataRef);
+
     const { height, width } = result.val();
     setBoardDimensions({ boardHeight: height, boardWidth: width });
     setLoading(false);
