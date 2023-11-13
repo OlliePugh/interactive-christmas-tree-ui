@@ -3,7 +3,7 @@ import WireCanvas from "../../_atoms/WireCanvas";
 import Bulb from "../../_atoms/Bulb";
 import lightConfig from "@/config/light_config.json";
 import { lightAdjustment } from "@/config/config";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import realtime from "@/config/fb_config";
 import { get, ref, onChildChanged } from "firebase/database";
 import { placementCooldown, hiddenBulbs } from "@/config/config";
@@ -11,12 +11,12 @@ import Bauble from "../Bauble";
 import { writeLights } from "@/utils/fb_funcs";
 import { functions } from "@/config/fb_config";
 import { User } from "firebase/auth";
+import { UserContext } from "@/components/_atoms/UserProvider";
 
 interface BulbsProps {
   visible: any;
   width: number;
   height: number;
-  userData: User;
   setToastMessage: CallableFunction;
   openBauble: (id: number) => void;
   lastPlacement: any;
@@ -27,12 +27,12 @@ const Bulbs = ({
   visible,
   width,
   height,
-  userData,
   setToastMessage,
   openBauble,
   lastPlacement,
   setLastPlacement,
 }: BulbsProps) => {
+  const { user } = useContext(UserContext);
   const [bulbsColours, setBulbsColours] = useState<string[] | undefined>();
   const bulbsColoursRef = useRef<string[] | undefined>();
   bulbsColoursRef.current = bulbsColours;
@@ -117,7 +117,7 @@ const Bulbs = ({
                 top: y,
               }}
               setColourCallback={
-                userData
+                user
                   ? broadcastBulbColour
                   : () => {
                       setToastMessage({

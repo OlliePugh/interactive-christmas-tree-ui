@@ -9,12 +9,10 @@ import { IconButton, Box, AlertColor } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Countdown from "@/components/_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { User } from "firebase/auth";
-import { resetBoard } from "@/utils/fb_funcs";
 
 interface BaublePanelProps {
   setBaubleOpen: (id: number | null) => void;
-  userData: User | boolean;
+
   boardId: number;
   setToastMessage: ({
     message,
@@ -27,7 +25,6 @@ interface BaublePanelProps {
 
 const BaublePanel = ({
   setBaubleOpen,
-  userData,
   boardId,
   setToastMessage,
 }: BaublePanelProps) => {
@@ -39,11 +36,11 @@ const BaublePanel = ({
   const [loading, setLoading] = useState(true);
   const [lastPlacement, setLastPlacement] = useState(0);
 
-  const initCanvas = () => {
-    resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
-  };
+  // const initCanvas = () => {
+  //   resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
+  // };
 
-  useEffect(initCanvas, []);
+  // useEffect(initCanvas, []);
 
   const canvasListener = useCallback(async () => {
     const metaDataRef = ref(realtime, `board${boardId}/metadata`);
@@ -111,7 +108,6 @@ const BaublePanel = ({
           <div className="Canvas">
             {boardWidth && boardHeight && (
               <Board
-                userData={userData}
                 setToastMessage={setToastMessage}
                 width={boardWidth}
                 height={boardHeight}

@@ -2,7 +2,7 @@ import { Box, SxProps } from "@mui/system";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
 import { treeDimensions } from "@/config/config";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Snackbar, Alert, AlertColor } from "@mui/material";
 import BaublePaper from "../BaublePaper";
 import Countdown from "../../_atoms/Countdown";
@@ -12,13 +12,13 @@ import TreeStream from "../TreeStream";
 import NavigationSphere from "../../_atoms/NavigationCircle";
 import { User } from "firebase/auth";
 import { ToastPayload } from "@/@types/toast";
+import { UserContext } from "@/components/_atoms/UserProvider";
 
 interface MainBodyProps {
   sx?: SxProps;
-  userData: User;
 }
 
-const MainBody = ({ sx, userData }: MainBodyProps) => {
+const MainBody = ({ sx }: MainBodyProps) => {
   const [virtualBulbsVisible, setVirtualBulbsVisible] = useState(true);
   const [toastMessage, setToastMessage] = useState<ToastPayload | undefined>();
   const [toastOpen, setToastOpen] = useState(false);
@@ -36,21 +36,18 @@ const MainBody = ({ sx, userData }: MainBodyProps) => {
       <BaublePaper
         setBaubleOpen={setBaubleOpen}
         baubleOpen={baubleOpen}
-        userData={userData}
         boardId={1}
         setToastMessage={setToastMessage}
       />
       <BaublePaper
         setBaubleOpen={setBaubleOpen}
         baubleOpen={baubleOpen}
-        userData={userData}
         boardId={2}
         setToastMessage={setToastMessage}
       />
       <BaublePaper
         setBaubleOpen={setBaubleOpen}
         baubleOpen={baubleOpen}
-        userData={userData}
         boardId={3}
         setToastMessage={setToastMessage}
       />
@@ -105,7 +102,6 @@ const MainBody = ({ sx, userData }: MainBodyProps) => {
         <TransformComponent>
           <TreeStream />
           <Bulbs
-            userData={userData}
             visible={virtualBulbsVisible}
             height={treeDimensions.height}
             width={treeDimensions.width}

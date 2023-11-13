@@ -4,13 +4,7 @@ import { Typography } from "@mui/material";
 import AccountActions from "../AccountActions";
 import { User } from "firebase/auth";
 
-interface HeaderProps {
-  signInCallback: () => void;
-  signOutCallback: () => void;
-  userData: User | boolean;
-}
-
-const Header = ({ signInCallback, signOutCallback, userData }: HeaderProps) => {
+const Header = () => {
   return (
     <Box
       sx={{
@@ -51,11 +45,7 @@ const Header = ({ signInCallback, signOutCallback, userData }: HeaderProps) => {
           </a>
         </Typography>
       </Typography>
-      <AccountActions
-        signInCallback={signInCallback}
-        signOutCallback={signOutCallback}
-        userData={userData}
-      />
+      <AccountActions />
     </Box>
   );
 };

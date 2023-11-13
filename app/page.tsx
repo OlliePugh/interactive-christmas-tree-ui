@@ -16,58 +16,35 @@ import { ThemeProvider, Typography } from "@mui/material";
 import { theme } from "@/utils/theme";
 import FaqPage from "@/components/_organisms/FaqPage";
 import { colours } from "@/config/palette";
+import UserProvider from "@/components/_atoms/UserProvider";
 
 const App = () => {
-  const [userData, setUserData] = useState<boolean | User>(false);
-  const provider = new GoogleAuthProvider();
-
-  const signInWrapper = () => {
-    signInWithPopup(auth, provider).then((result) => {
-      setUserData(result.user);
-    });
-  };
-
-  const signOutWrapper = () => {
-    signOut(auth).then((_) => {
-      setUserData(false);
-    });
-  };
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserData(user);
-      }
-    });
-  }, [userData]);
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        <Header
-          signInCallback={signInWrapper}
-          signOutCallback={signOutWrapper}
-          userData={userData}
-        />
-        <Box sx={{ overflow: "hidden", flex: 1 }}>
-          <MainBody userData={userData} />
-        </Box>
-        <Box
-          style={{ backgroundColor: colours.SECONDARY1 }}
-          paddingBottom={"3rem"}
-        >
-          <Typography
-            marginTop="1rem"
-            paddingLeft={"1rem"}
-            variant="h4"
-            color="white"
-            fontWeight={600}
+      <UserProvider>
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+          <Header />
+          <Box sx={{ overflow: "hidden", flex: 1 }}>
+            <MainBody />
+          </Box>
+          <Box
+            style={{ backgroundColor: colours.SECONDARY1 }}
+            paddingBottom={"3rem"}
           >
-            What is this?
-          </Typography>
+            <Typography
+              marginTop="1rem"
+              paddingLeft={"1rem"}
+              variant="h4"
+              color="white"
+              fontWeight={600}
+            >
+              What is this?
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-      <FaqPage />
-      <Footer />
+        <FaqPage />
+        <Footer />
+      </UserProvider>
     </ThemeProvider>
   );
 };

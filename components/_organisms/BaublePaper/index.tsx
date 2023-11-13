@@ -1,13 +1,11 @@
 import BaublePanel from "../BaublePanel";
 import OutsideClickHandler from "react-outside-click-handler";
 import { Paper } from "@mui/material";
-import { User } from "firebase/auth";
 import { ToastPayload } from "@/@types/toast";
 
 interface BaublePaper {
   setBaubleOpen: (id: number | null) => void;
   baubleOpen: number | null;
-  userData: User | boolean;
   boardId: number;
   setToastMessage: (payload: ToastPayload) => void;
 }
@@ -15,7 +13,6 @@ interface BaublePaper {
 const BaublePaper = ({
   setBaubleOpen,
   baubleOpen,
-  userData,
   boardId,
   setToastMessage,
 }: BaublePaper) => {
@@ -42,7 +39,6 @@ const BaublePaper = ({
       >
         <BaublePanel
           setBaubleOpen={setBaubleOpen}
-          userData={userData}
           boardId={boardId}
           setToastMessage={setToastMessage}
         />

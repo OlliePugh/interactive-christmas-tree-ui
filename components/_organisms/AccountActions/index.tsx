@@ -1,26 +1,16 @@
 import { Typography, Link } from "@mui/material";
 import LoggedInHeader from "../../_atoms/LoggedInHeader";
-import { User } from "firebase/auth";
+import { UserContext } from "@/components/_atoms/UserProvider";
+import { useContext } from "react";
 
-interface AccountActionsProps {
-  signInCallback: () => void;
-  signOutCallback: () => void;
-  userData: User | boolean;
-}
-const AccountActions = ({
-  signInCallback,
-  signOutCallback,
-  userData,
-}: AccountActionsProps) => {
+const AccountActions = () => {
+  const { user, signIn, signOut } = useContext(UserContext);
   return (
     <>
-      {userData ? (
-        <LoggedInHeader
-          signOutCallback={signOutCallback}
-          userData={userData as User}
-        />
+      {user ? (
+        <LoggedInHeader signOutCallback={signOut} userData={user} />
       ) : (
-        <Link component="button" onClick={signInCallback} underline="none">
+        <Link component="button" onClick={signIn} underline="none">
           <Typography sx={{ display: "inline", color: "white" }}>
             Login
           </Typography>

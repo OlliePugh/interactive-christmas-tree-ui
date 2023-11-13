@@ -1,4 +1,11 @@
-import { useRef, useEffect, useState, useCallback, MouseEvent } from "react";
+import {
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  MouseEvent,
+  useContext,
+} from "react";
 import { ref, onChildChanged } from "firebase/database";
 import realtime, { functions } from "@/config/fb_config";
 import ColourPicker from "@/components/_atoms/ColourPicker";
@@ -12,6 +19,7 @@ import {
 import axios from "axios";
 import { User } from "firebase/auth";
 import { AlertColor } from "@mui/material";
+import { UserContext } from "@/components/_atoms/UserProvider";
 
 const zeroPad = (num: string, places: number) =>
   String(num).padStart(places, "0");
@@ -33,7 +41,6 @@ interface BoardProps {
     message: string;
     severity: AlertColor;
   }) => void;
-  userData: User | boolean;
 }
 
 const Board = ({
@@ -42,8 +49,8 @@ const Board = ({
   boardId,
   placeCooldownCheck,
   setToastMessage,
-  userData,
 }: BoardProps) => {
+  const { user } = useContext(UserContext);
   const [currentClickPos, setCurrentClickPos] = useState<{
     row: number;
     col: number;
@@ -236,7 +243,7 @@ const Board = ({
       )}
       <canvas
         onClick={
-          userData
+          user
             ? (event) => canvasClick(event)
             : () =>
                 setToastMessage({
