@@ -15,36 +15,34 @@ const BaublePaper = ({
   baubleOpen,
   boardId,
   setToastMessage,
-}: BaublePaper) => {
-  return (
-    <OutsideClickHandler
-      onOutsideClick={() => baubleOpen === boardId && setBaubleOpen(null)}
+}: BaublePaper) => (
+  <OutsideClickHandler
+    onOutsideClick={() => baubleOpen === boardId && setBaubleOpen(null)}
+  >
+    <Paper
+      sx={{
+        display: baubleOpen === boardId ? "block" : "none",
+        zIndex: 100,
+        margin: "auto",
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        position: "absolute",
+        height: "80%",
+        width: "95%",
+        overflow: "hidden",
+      }}
+      elevation={24}
+      className={"bauble-wrapper"}
     >
-      <Paper
-        sx={{
-          display: baubleOpen === boardId ? "block" : "none",
-          zIndex: 100,
-          margin: "auto",
-          top: 0,
-          right: 0,
-          left: 0,
-          bottom: 0,
-          position: "absolute",
-          height: "80%",
-          width: "95%",
-          overflow: "hidden",
-        }}
-        elevation={24}
-        className={"bauble-wrapper"}
-      >
-        <BaublePanel
-          setBaubleOpen={setBaubleOpen}
-          boardId={boardId}
-          setToastMessage={setToastMessage}
-        />
-      </Paper>
-    </OutsideClickHandler>
-  );
-};
+      <BaublePanel
+        setBaubleOpen={setBaubleOpen}
+        boardId={boardId}
+        setToastMessage={setToastMessage}
+      />
+    </Paper>
+  </OutsideClickHandler>
+);
 
 export default BaublePaper;

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ref, get } from "firebase/database";
-// import { resetBoard } from "../../utils/fb_funcs";
-import realtime, { functions } from "@/config/fb_config";
+import realtime from "@/config/fb_config";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { placementCooldown } from "@/config/config";
 import Board from "@/components/_organisms/Board";
@@ -35,12 +34,6 @@ const BaublePanel = ({
   });
   const [loading, setLoading] = useState(true);
   const [lastPlacement, setLastPlacement] = useState(0);
-
-  // const initCanvas = () => {
-  //   resetBoard(functions, { boardId: boardId, width: 160, height: 128 });
-  // };
-
-  // useEffect(initCanvas, []);
 
   const canvasListener = useCallback(async () => {
     const metaDataRef = ref(realtime, `board${boardId}/metadata`);

@@ -34,7 +34,6 @@ const Bulb = ({ sx, id, colour, setColourCallback }: BulbProps) => {
       )}
       <Box
         onClick={() => {
-          // console.log(id);
           setPaletteOpen(true);
         }}
         sx={{ ...sx, opacity: 0.7, zIndex: 5 }}
@@ -42,15 +41,6 @@ const Bulb = ({ sx, id, colour, setColourCallback }: BulbProps) => {
         flexDirection={"column"}
         position={"absolute"}
       >
-        {/* <BulbSvg
-          height={20}
-          style={{ transform: "translateY(1px)" }}
-          src="/bulb.svg"
-          stroke="black"
-          fill={true}
-          strokeWidth={20}
-          alt="bulb"
-        /> */}
         <BulbSvg height={20} fill={colour} stroke="black" strokeWidth={20} />
       </Box>
     </OutsideClickHandler>

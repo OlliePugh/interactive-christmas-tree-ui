@@ -2,7 +2,7 @@ import { Box, SxProps } from "@mui/system";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
 import { treeDimensions } from "@/config/config";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Snackbar, Alert, AlertColor } from "@mui/material";
 import BaublePaper from "../BaublePaper";
 import Countdown from "../../_atoms/Countdown";
@@ -10,9 +10,7 @@ import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import { placementCooldown } from "@/config/config";
 import TreeStream from "../TreeStream";
 import NavigationSphere from "../../_atoms/NavigationCircle";
-import { User } from "firebase/auth";
 import { ToastPayload } from "@/@types/toast";
-import { UserContext } from "@/components/_atoms/UserProvider";
 
 interface MainBodyProps {
   sx?: SxProps;

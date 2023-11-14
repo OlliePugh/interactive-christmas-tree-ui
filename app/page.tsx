@@ -4,14 +4,6 @@ import Header from "@/components/_organisms/Header";
 import { Box } from "@mui/system";
 import Footer from "@/components/_organisms/Footer";
 import MainBody from "@/components/_organisms/MainBody";
-import {
-  GoogleAuthProvider,
-  User,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
-import { auth } from "@/config/fb_config";
-import { useState, useEffect } from "react";
 import { ThemeProvider, Typography } from "@mui/material";
 import { theme } from "@/utils/theme";
 import FaqPage from "@/components/_organisms/FaqPage";
@@ -42,9 +34,9 @@ const App = () => {
             </Typography>
           </Box>
         </Box>
-        <FaqPage />
-        <Footer />
       </UserProvider>
+      <FaqPage />
+      <Footer />
     </ThemeProvider>
   );
 };

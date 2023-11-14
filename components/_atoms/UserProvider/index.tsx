@@ -1,3 +1,5 @@
+"use client";
+
 import { auth } from "@/config/fb_config";
 import { GoogleAuthProvider, User, signInWithPopup } from "firebase/auth";
 import {
