@@ -4,12 +4,12 @@ import {
   getStorage,
   ref as sRef,
 } from "@firebase/storage"; // TODO remove this dep
-import { ref, onValue, get } from "firebase/database";
-import { httpsCallable } from "firebase/functions";
+import { ref, onValue, get, Database } from "firebase/database";
+import { Functions, httpsCallable } from "firebase/functions";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { firestore } from "@/config/fb_config";
 
-const listenData = (db, path) => {
+const listenData = (db: Database, path: string) => {
   const dbRef = ref(db, path);
   onValue(dbRef, (snapshot) => {
     const data = snapshot.val();
@@ -17,7 +17,7 @@ const listenData = (db, path) => {
   });
 };
 
-const readOnce = (db, path) => {
+const readOnce = (db: Database, path: string) => {
   const dbRef = ref(db, path);
   get(dbRef).then((snapshot) => {
     if (snapshot.exists()) {
@@ -28,13 +28,20 @@ const readOnce = (db, path) => {
   });
 };
 
-const writeData = async (functions, data) => {
+const writeData = async (
+  functions: Functions,
+  data: {
+    id: number;
+    boardId: number;
+    colour: string;
+  }
+) => {
   const changeSquare = httpsCallable(functions, "changeSquare");
   const result = await changeSquare(data);
   console.log(result);
 };
 
-const resetBoard = async (functions, data) => {
+const resetBoard = async (functions: Functions, data: unknown) => {
   const resetBoardFunction = httpsCallable(functions, "resetBoard");
   try {
     const result = await resetBoardFunction(data);
@@ -44,7 +51,7 @@ const resetBoard = async (functions, data) => {
   }
 };
 
-const resetLights = async (functions, data) => {
+const resetLights = async (functions: Functions, data: { length: number }) => {
   const resetLightsFunction = httpsCallable(functions, "resetLights");
   try {
     const result = await resetLightsFunction(data);
@@ -54,30 +61,34 @@ const resetLights = async (functions, data) => {
   }
 };
 
-const writeLights = async (functions, data) => {
+const writeLights = async (
+  functions: Functions,
+  data: { id: number; colour: string }
+) => {
   const changeLight = httpsCallable(functions, "changeLight");
   const result = await changeLight(data);
   console.log(result);
 };
 
-const getBaubleBmpUrl = async (boardId) => {
+const getBaubleBmpUrl = async (boardId: number) => {
   const storage = getStorage();
   const pathReference = sRef(storage, `board${boardId}`);
   return await getDownloadURL(pathReference);
 };
 
-const getBaubleMetaData = async (boardId) => {
+const getBaubleMetaData = async (boardId: number) => {
   const storage = getStorage();
   const pathReference = sRef(storage, `board${boardId}`);
   return await getMetadata(pathReference);
 };
 
-const getBaubleRecentChanges = async (boardId) => {
+const getBaubleRecentChanges = async (boardId: number) => {
   const metaData = await getBaubleMetaData(boardId);
   const recentChangesRef = collection(firestore, `board${boardId}`);
   const q = query(
     recentChangesRef,
-    where("time", ">", new Date(metaData.timeCreated), orderBy("time"))
+    where("time", ">", new Date(metaData.timeCreated)),
+    orderBy("time")
   );
   const querySnapshot = await getDocs(q);
   return querySnapshot;
