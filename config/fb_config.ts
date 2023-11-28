@@ -51,11 +51,13 @@ const enableAnalytics = () => {
   analytics = getAnalytics(app);
 };
 
-if (window.analyticsEnabled) {
-  enableAnalytics();
-}
+if (typeof window !== "undefined") {
+  if (window.analyticsEnabled) {
+    enableAnalytics();
+  }
 
-window.addEventListener("analyticsEnabled", enableAnalytics, false);
+  window.addEventListener("analyticsEnabled", enableAnalytics, false);
+}
 
 export { functions, auth, storage, firestore, analytics };
 export default realtime;

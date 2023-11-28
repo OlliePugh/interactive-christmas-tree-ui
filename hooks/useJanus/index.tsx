@@ -1,3 +1,5 @@
+"use client";
+
 import { randomUUID } from "crypto";
 import {
   Client as JanusClient,
@@ -22,7 +24,8 @@ const useJanus = ({ url, connectionOptions, streamId }: useJanusProps) => {
     return new JanusClient(
       url,
       connectionOptions,
-      navigator.mediaDevices,
+      // @ts-expect-error this fails during build because navigator is null, but isn't a problem as this runs in the client
+      typeof window !== "undefined" ? navigator.mediaDevices : null,
       new WebRTCShim()
     );
   }, [url, connectionOptions]);
