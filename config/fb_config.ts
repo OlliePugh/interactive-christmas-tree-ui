@@ -17,15 +17,15 @@ declare global {
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBTDoOZ-PyoNdtlCdtc1nNBfF59gYS5a1k",
-  authDomain: "online-christmas-tree.firebaseapp.com",
-  projectId: "online-christmas-tree",
-  storageBucket: "online-christmas-tree.appspot.com",
-  messagingSenderId: "303709889135",
-  appId: "1:303709889135:web:8ec8daed2b3f76a388639a",
+  apiKey: "AIzaSyBWyB6w2RTwxogH9DM92fY8Ufgu2lun990",
+  authDomain: "real-world-games.firebaseapp.com",
   databaseURL:
-    "https://online-christmas-tree-default-rtdb.europe-west1.firebasedatabase.app",
-  measurementId: "G-NTKZ1RCW8N",
+    "https://interactive-christmas-tree.europe-west1.firebasedatabase.app/",
+  projectId: "real-world-games",
+  storageBucket: "real-world-games.appspot.com",
+  messagingSenderId: "844489141235",
+  appId: "1:844489141235:web:f009c88a6e25d65ff80086",
+  measurementId: "G-D6ZVPMH107",
 };
 
 // Initialize Firebase
