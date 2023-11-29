@@ -12,7 +12,8 @@ const Bauble = ({ openBauble, id, sx }: BaubleProps) => (
     sx={{ ...sx, position: "absolute", zIndex: 10 }}
     onClick={() => openBauble(id)}
   >
-    <Image height={80} width={80} alt="Bauble" src="/bauble.png" />
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img height={80} width={80} alt="Bauble" src="/bauble.png" />
   </Box>
 );
 
