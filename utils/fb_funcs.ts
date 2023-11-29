@@ -1,13 +1,8 @@
-import {
-  getDownloadURL,
-  getMetadata,
-  getStorage,
-  ref as sRef,
-} from "@firebase/storage"; // TODO remove this dep
+import { getDownloadURL, getMetadata, ref as sRef } from "@firebase/storage"; // TODO remove this dep
 import { ref, onValue, get, Database } from "firebase/database";
 import { Functions, httpsCallable } from "firebase/functions";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
-import { firestore } from "@/config/fb_config";
+import { firestore, storage } from "@/config/fb_config";
 
 const listenData = (db: Database, path: string) => {
   const dbRef = ref(db, path);
@@ -67,17 +62,14 @@ const writeLights = async (
 ) => {
   const changeLight = httpsCallable(functions, "changeLight");
   const result = await changeLight(data);
-  console.log(result);
 };
 
 const getBaubleBmpUrl = async (boardId: number) => {
-  const storage = getStorage();
   const pathReference = sRef(storage, `board${boardId}`);
   return await getDownloadURL(pathReference);
 };
 
 const getBaubleMetaData = async (boardId: number) => {
-  const storage = getStorage();
   const pathReference = sRef(storage, `board${boardId}`);
   return await getMetadata(pathReference);
 };

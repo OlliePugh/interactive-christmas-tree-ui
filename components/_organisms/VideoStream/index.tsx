@@ -42,7 +42,7 @@ const VideoStream = ({
     }
   }, [remoteStream]);
 
-  return <video style={style} ref={videoRef} />;
+  return <video muted style={style} ref={videoRef} />;
 };
 
 export default VideoStream;
