@@ -1,55 +1,36 @@
-# Interactive Christmas Tree UI
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-This repo is the UI built in React for the [Interactive Christmas Tree](https://interactive-christmas-tree.com)
+## Getting Started
 
-## What is the _Interactive Christmas Tree_?
+First, run the development server:
 
-This is a real Christmas Tree that lives in my home that can be decorated over a [web interface](https://interactive-christmas-tree.com), it is now read-only but you can still view the tree and its status.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-### The Lights
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-<div style="display: flex;">
-    <p style="flex: 1">
-        Each individual light can be controlled with up to 8 different colours and you can see your change happen in the video stream behind the lights! (Delay is around 3-4 secs)
-    </p>
-    <div style="text-align: center; flex: 1"><img src="images/lights-animation.gif" style="margin: 20px; max-width: 400px"/></div>
-</div>
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### The Baubles (Ornaments)
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-<div style="display: flex;">
-    <div style="text-align: center; flex: 1"><img src="images/bauble-animation.gif" style="margin: 20px; max-width: 400px"/></div>
-    <p style="flex: 1">
-        And the Baubles (Ornmanents if you're from the U.S.) can be drawn on in an r/place style fashion, and then they will be displayed on small screens hung on the tree
-    </p>
-</div>
+## Learn More
 
-I am happy to answer any questions in my [Discord](https://discord.com/invite/xdJpf4dZF7)
+To learn more about Next.js, take a look at the following resources:
 
-## Timelapses of the Baubles
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-<details>
-  <summary>WARNING - These were drawn by people on the internet and do contain some NSFW words/symbols... so view at your own discretion</summary>
-  <div style="display: flex; flex-direction: row; justify-content: space-between">
-  <img src="images/board1.gif" width="300px"/>
-  <img src="images/board2.gif" width="300px"/>
-  <img src="images/board3.gif" width="300px"/>
-  </div>
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-</details>
-<br >
-<br >
+## Deploy on Vercel
 
-## More of this project
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Full video of the project can be found [here](https://youtu.be/QkLoyxMwcz4) and a full summary of the project can be found in this [video](https://youtu.be/08Lin_TLylI)
-
-The other repos that are part of the project
-[The UI](https://github.com/OlliePugh/online-christmas-tree-ui)
-[The Ornaments (Baubles)](https://github.com/OlliePugh/internet-bauble)
-[The Lights](https://github.com/OlliePugh/internet-christmas-lights)
-[The Backend](https://github.com/OlliePugh/online-christmas-tree-infra)
-
-## Note
-
-This code is a little bit of a state at the minute as it was a bit of a how you say _bodge_ to make the project read-only, I essentially removed the bits that allowed it to change stuff and it seems to of worked. But it does need a clean-up, especially if I do it again next year... 😉
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
