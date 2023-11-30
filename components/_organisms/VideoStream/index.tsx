@@ -1,3 +1,5 @@
+"use client";
+
 import React, { CSSProperties, useEffect, useRef } from "react";
 
 import useJanus from "@/hooks/useJanus";
@@ -21,7 +23,7 @@ const VideoStream = ({
     connectionOptions: { keepalive: true },
     streamId,
   });
-
+  console.log("hey");
   useEffect(() => {
     if (playing) {
       if (remoteStream == null) watch();
@@ -31,8 +33,12 @@ const VideoStream = ({
   }, [playing]);
 
   useEffect(() => {
+    console.log("use effect");
+    console.log("remote stream", remoteStream);
+    console.log("videoRef", videoRef.current);
     if (remoteStream != null && videoRef.current) {
       videoRef.current.srcObject = remoteStream;
+      videoRef.current.play();
       videoRef.current.onloadedmetadata = () => {
         remoteStream
           .getAudioTracks()
@@ -42,7 +48,16 @@ const VideoStream = ({
     }
   }, [remoteStream]);
 
-  return <video autoPlay muted style={style} ref={videoRef} />;
+  return (
+    <video
+      preload="metadata"
+      autoPlay
+      muted
+      playsInline
+      style={style}
+      ref={videoRef}
+    />
+  );
 };
 
 export default VideoStream;

@@ -37,13 +37,13 @@ const functions = getFunctions(app, "europe-west1");
 const storage = getStorage(app);
 const firestore = getFirestore(app);
 
-if (!production) {
-  connectAuthEmulator(auth, "http://127.0.0.1:9099");
-  connectFunctionsEmulator(functions, "192.168.1.85", 5001);
-  connectDatabaseEmulator(realtime, "localhost", 9000);
-  connectStorageEmulator(storage, "localhost", 9199);
-  connectFirestoreEmulator(firestore, "localhost", 8080);
-}
+// if (!production) {
+//   connectAuthEmulator(auth, "http://127.0.0.1:9099");
+//   connectFunctionsEmulator(functions, "192.168.1.85", 5001);
+//   connectDatabaseEmulator(realtime, "localhost", 9000);
+//   connectStorageEmulator(storage, "localhost", 9199);
+//   connectFirestoreEmulator(firestore, "localhost", 8080);
+// }
 
 let analytics;
 
