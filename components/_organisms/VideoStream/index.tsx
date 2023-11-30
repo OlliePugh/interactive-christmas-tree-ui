@@ -23,7 +23,7 @@ const VideoStream = ({
     connectionOptions: { keepalive: true },
     streamId,
   });
-  console.log("hey");
+
   useEffect(() => {
     if (playing) {
       if (remoteStream == null) watch();
@@ -39,6 +39,7 @@ const VideoStream = ({
     if (remoteStream != null && videoRef.current) {
       videoRef.current.srcObject = remoteStream;
       videoRef.current.play();
+
       videoRef.current.onloadedmetadata = () => {
         remoteStream
           .getAudioTracks()
