@@ -5,6 +5,7 @@ import ColourPicker from "../ColourPicker";
 import { fairyLightsColours } from "@/config/palette";
 import { SxProps } from "@mui/system";
 import BulbSvg from "../BulbSvg";
+import SocketSvg from "../SocketSvg";
 
 interface BulbProps {
   sx: SxProps;
@@ -41,6 +42,10 @@ const Bulb = ({ sx, id, colour, setColourCallback }: BulbProps) => {
         flexDirection={"column"}
         position={"absolute"}
       >
+        <SocketSvg
+          height={20}
+          style={{ transform: "translateY(1px)", fill: "black" }}
+        />
         <BulbSvg height={20} fill={colour} stroke="black" strokeWidth={20} />
       </Box>
     </OutsideClickHandler>

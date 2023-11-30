@@ -8,8 +8,9 @@ const TreeStream = () => (
       width: treeDimensions.height,
       transformOrigin: "top left",
       transform: `translateY(${treeDimensions.height}px) rotate(-90deg)`,
+      maxWidth: "initial",
     }}
-    serverAddress="wss://janus.conf.meetecho.com/ws"
+    serverAddress="wss://stream.ollieq.co.uk/ws"
     streamId={1}
     playing={true}
   />
