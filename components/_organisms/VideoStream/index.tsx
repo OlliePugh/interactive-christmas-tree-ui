@@ -33,9 +33,6 @@ const VideoStream = ({
   }, [playing]);
 
   useEffect(() => {
-    console.log("use effect");
-    console.log("remote stream", remoteStream);
-    console.log("videoRef", videoRef.current);
     if (remoteStream != null && videoRef.current) {
       videoRef.current.srcObject = remoteStream;
       videoRef.current.play();
