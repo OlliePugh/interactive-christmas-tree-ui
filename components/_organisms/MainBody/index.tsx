@@ -73,6 +73,7 @@ const MainBody = ({ sx }: MainBodyProps) => {
           onClick={() => {
             setVirtualBulbsVisible(!virtualBulbsVisible);
           }}
+          id="hide-overlay-button"
         >
           Hide Overlay
         </Button>
