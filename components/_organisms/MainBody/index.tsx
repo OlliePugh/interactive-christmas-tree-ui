@@ -84,7 +84,7 @@ const MainBody = ({ sx }: MainBodyProps) => {
         >
         Reset Lights
       </Button> */}
-        <HourglassEmptyIcon style={{ transform: "translateY(7px)" }} />
+        <HourglassEmptyIcon />
         <Countdown
           key={`0-${lastBulbPlacement}`}
           targetDate={lastBulbPlacement + placementCooldown}
