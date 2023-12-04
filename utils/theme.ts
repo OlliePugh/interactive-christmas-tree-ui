@@ -1,8 +1,15 @@
 import { createTheme, responsiveFontSizes } from "@mui/material";
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
+});
 
 let theme = createTheme({
   typography: {
-    fontFamily: ["Montserrat", "cursive"].join(","),
+    fontFamily: montserrat.style.fontFamily,
   },
 });
 
