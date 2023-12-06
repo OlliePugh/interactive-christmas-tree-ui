@@ -3,6 +3,7 @@ import { ref, onValue, get, Database } from "firebase/database";
 import { Functions, httpsCallable } from "firebase/functions";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { firestore, storage } from "@/config/fb_config";
+import posthog from "posthog-js";
 
 const listenData = (db: Database, path: string) => {
   const dbRef = ref(db, path);
@@ -33,6 +34,7 @@ const writeData = async (
 ) => {
   const changeSquare = httpsCallable(functions, "changeSquare");
   const result = await changeSquare(data);
+  posthog.capture("change_square", data);
   console.log(result);
 };
 const writeBulk = async (
@@ -74,6 +76,7 @@ const writeLights = async (
 ) => {
   const changeLight = httpsCallable(functions, "changeLight");
   const result = await changeLight(data);
+  posthog.capture("change_light", data);
 };
 
 const getBaubleBmpUrl = async (boardId: number) => {
