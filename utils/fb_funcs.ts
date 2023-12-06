@@ -33,6 +33,7 @@ const writeData = async (
 ) => {
   const changeSquare = httpsCallable(functions, "changeSquare");
   const result = await changeSquare(data);
+  window.posthog.capture("change_square", data);
   console.log(result);
 };
 const writeBulk = async (
@@ -74,6 +75,7 @@ const writeLights = async (
 ) => {
   const changeLight = httpsCallable(functions, "changeLight");
   const result = await changeLight(data);
+  window.posthog.capture("change_light", data);
 };
 
 const getBaubleBmpUrl = async (boardId: number) => {

@@ -9,35 +9,40 @@ import { theme } from "@/utils/theme";
 import FaqPage from "@/components/_organisms/FaqPage";
 import { colours } from "@/config/palette";
 import UserProvider from "@/components/_atoms/UserProvider";
+import AnalyticsProvider from "@/components/_atoms/PostHogProvider";
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <UserProvider>
-        <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-          <Header />
-          <Box sx={{ overflow: "hidden", flex: 1 }}>
-            <MainBody />
-          </Box>
+    <AnalyticsProvider>
+      <ThemeProvider theme={theme}>
+        <UserProvider>
           <Box
-            style={{ backgroundColor: colours.SECONDARY1 }}
-            paddingBottom={"3rem"}
+            sx={{ display: "flex", flexDirection: "column", height: "100%" }}
           >
-            <Typography
-              marginTop="1rem"
-              paddingLeft={"1rem"}
-              variant="h4"
-              color="white"
-              fontWeight={600}
+            <Header />
+            <Box sx={{ overflow: "hidden", flex: 1 }}>
+              <MainBody />
+            </Box>
+            <Box
+              style={{ backgroundColor: colours.SECONDARY1 }}
+              paddingBottom={"3rem"}
             >
-              What is this?
-            </Typography>
+              <Typography
+                marginTop="1rem"
+                paddingLeft={"1rem"}
+                variant="h4"
+                color="white"
+                fontWeight={600}
+              >
+                What is this?
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      </UserProvider>
-      <FaqPage />
-      <Footer />
-    </ThemeProvider>
+        </UserProvider>
+        <FaqPage />
+        <Footer />
+      </ThemeProvider>
+    </AnalyticsProvider>
   );
 };
 
