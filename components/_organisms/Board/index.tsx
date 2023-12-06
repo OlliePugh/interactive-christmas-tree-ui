@@ -14,10 +14,10 @@ import { baubleColours } from "@/config/palette";
 import {
   getBaubleBmpUrl,
   getBaubleRecentChanges,
+  writeBulk,
   writeData,
 } from "@/utils/fb_funcs";
 import axios from "axios";
-import { User } from "firebase/auth";
 import { AlertColor } from "@mui/material";
 import { UserContext } from "@/components/_atoms/UserProvider";
 
@@ -34,6 +34,8 @@ interface BoardProps {
   height: number;
   boardId: number;
   placeCooldownCheck: () => boolean;
+  adminMode: boolean;
+  setAdminMode: (adminMode: boolean) => void;
   setToastMessage: ({
     message,
     severity,
@@ -43,63 +45,76 @@ interface BoardProps {
   }) => void;
 }
 
+interface ClickPosition {
+  col: number;
+  row: number;
+}
+
 const Board = ({
   width,
   height,
   boardId,
   placeCooldownCheck,
   setToastMessage,
+  adminMode,
+  setAdminMode,
 }: BoardProps) => {
   const { user } = useContext(UserContext);
-  const [currentClickPos, setCurrentClickPos] = useState<{
-    row: number;
-    col: number;
-  } | null>();
+  const [currentClickPos, setCurrentClickPos] =
+    useState<ClickPosition | null>();
   const [loaded, setLoaded] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const currentOpenPixel = useRef<{ col: number; row: number } | null>();
-
-  const setCurrentOpenPixel = useCallback(
-    ({ col, row }: { col: number; row: number }) => {
-      const canvas = canvasRef.current!;
-      const context = canvas.getContext("2d", { willReadFrequently: true })!;
-      // revert old pixel if it exists
-      if (currentOpenPixel.current) {
-        const oldPixel = context.getImageData(
-          currentOpenPixel.current.col * 10 + 5,
-          currentOpenPixel.current.row * 10 + 5,
-          1,
-          1
-        );
-
-        const oldColour = rgbToHex(
-          oldPixel.data[0],
-          oldPixel.data[1],
-          oldPixel.data[2]
-        );
-
-        setPixelColour(
-          currentOpenPixel.current.row,
-          currentOpenPixel.current.col,
-          oldColour
-        );
-      }
-
-      drawOutline(col, row);
-
-      currentOpenPixel.current = { col, row };
-    },
+  const currentOpenPixel = useRef<ClickPosition | null>();
+  const [adminModeSelection, setAdminModeSelection] = useState<ClickPosition[]>(
     []
   );
 
+  const setCurrentOpenPixel = useCallback(({ col, row }: ClickPosition) => {
+    const canvas = canvasRef.current!;
+    const context = canvas.getContext("2d", { willReadFrequently: true })!;
+    // revert old pixel if it exists
+    if (currentOpenPixel.current) {
+      const oldPixel = context.getImageData(
+        currentOpenPixel.current.col * 10 + 5,
+        currentOpenPixel.current.row * 10 + 5,
+        1,
+        1
+      );
+
+      const oldColour = rgbToHex(
+        oldPixel.data[0],
+        oldPixel.data[1],
+        oldPixel.data[2]
+      );
+
+      setPixelColour(
+        currentOpenPixel.current.row,
+        currentOpenPixel.current.col,
+        oldColour
+      );
+    }
+
+    drawOutline(col, row);
+
+    currentOpenPixel.current = { col, row };
+  }, []);
   useEffect(() => {
     if (currentClickPos) {
       // TODO used for seeing where a click is (for banning purposes)
       // console.log(width * currentClickPos.row + currentClickPos.col);
       // console.log(boardId);
+      if (adminMode) {
+        setAdminModeSelection((adminModeSelection) => {
+          if (adminModeSelection.length != 2) {
+            return [...adminModeSelection, currentClickPos];
+          } else {
+            return [];
+          }
+        });
+      }
       setCurrentOpenPixel(currentClickPos);
     }
-  }, [currentClickPos, setCurrentOpenPixel]);
+  }, [currentClickPos, setCurrentOpenPixel, adminMode]);
 
   const setColour = async (colour: string) => {
     if (!placeCooldownCheck()) {
@@ -120,6 +135,51 @@ const Board = ({
       console.log(e);
     }
   };
+
+  const setBulkColour = useCallback(
+    async (colour: string) => {
+      console.log(adminModeSelection);
+      if (adminModeSelection.length !== 2) return;
+      const ids = [];
+
+      const [click1, click2] = adminModeSelection;
+
+      const topLeft = {
+        row: Math.min(click1.row, click2.row),
+        col: Math.min(click1.col, click2.col),
+      };
+
+      const bottomRight = {
+        row: Math.max(click1.row, click2.row),
+        col: Math.max(click1.col, click2.col),
+      };
+
+      // Iterate through the grid and add IDs that fall within the selection to the 'ids' array
+      for (let row = topLeft.row; row <= bottomRight.row; row++) {
+        for (let col = topLeft.col; col <= bottomRight.col; col++) {
+          const id = row * width + col; // Assuming 160 columns
+          if (id >= 0 && id < width * height) {
+            ids.push(id);
+          }
+        }
+      }
+
+      console.log(ids);
+
+      if (confirm("Are you sure") === true) {
+        try {
+          writeBulk(functions, {
+            ids,
+            boardId,
+            colour,
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
+    [adminModeSelection, boardId, height, width]
+  );
 
   const setPixelColour = (row: number, col: number, colour: string) => {
     const canvas = canvasRef.current!;
@@ -217,7 +277,6 @@ const Board = ({
       row: Math.floor(((event.clientY - rect.top) * scaleY - 1) / 10), // -1 to take into account the 1px border
     });
   };
-
   return (
     <>
       {!loaded && (
@@ -231,8 +290,12 @@ const Board = ({
             sx={{
               left: `${currentClickPos.col * 10}px`,
               top: `${currentClickPos.row * 10}px`,
+              visibility:
+                adminMode && adminModeSelection.length != 2
+                  ? "hidden"
+                  : "visible",
             }}
-            changeColour={setColour}
+            changeColour={adminMode ? setBulkColour : setColour}
             offset={{
               xOffset: -(Object.keys(baubleColours).length * 12) / 2,
               yOffset: -20,
