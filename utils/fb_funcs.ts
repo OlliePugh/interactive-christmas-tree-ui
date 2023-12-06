@@ -35,6 +35,18 @@ const writeData = async (
   const result = await changeSquare(data);
   console.log(result);
 };
+const writeBulk = async (
+  functions: Functions,
+  data: {
+    ids: number[];
+    boardId: number;
+    colour: string;
+  }
+) => {
+  const changeBulk = httpsCallable(functions, "changeBulk");
+  const result = await changeBulk(data);
+  console.log(result);
+};
 
 const resetBoard = async (functions: Functions, data: unknown) => {
   const resetBoardFunction = httpsCallable(functions, "resetBoard");
@@ -92,6 +104,7 @@ export {
   listenData,
   readOnce,
   writeData,
+  writeBulk,
   resetBoard,
   resetLights,
   writeLights,

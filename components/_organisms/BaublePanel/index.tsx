@@ -8,7 +8,9 @@ import { IconButton, Box, AlertColor } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Countdown from "@/components/_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-
+import { UserContext } from "@/components/_atoms/UserProvider";
+import { useContext } from "react";
+import { Button } from "@mui/material";
 interface BaublePanelProps {
   setBaubleOpen: (id: number | null) => void;
 
@@ -28,6 +30,8 @@ const BaublePanel = ({
   setToastMessage,
 }: BaublePanelProps) => {
   // could use an array of refs here to have access to each squares value
+  const { isAdmin } = useContext(UserContext);
+  const [isAdminMode, setIsAdminMode] = useState(false);
   const [{ boardWidth, boardHeight }, setBoardDimensions] = useState({
     boardWidth: null,
     boardHeight: null,
@@ -43,6 +47,12 @@ const BaublePanel = ({
     setBoardDimensions({ boardHeight: height, boardWidth: width });
     setLoading(false);
   }, [boardId]);
+
+  useEffect(() => {
+    if (!isAdmin) {
+      setIsAdminMode(false);
+    }
+  }, [isAdmin]);
 
   const placeCooldownCheck = () => {
     const now = Date.now();
@@ -87,11 +97,23 @@ const BaublePanel = ({
           right: 0,
         }}
       >
-        <HourglassEmptyIcon style={{ transform: "translateY(7px)" }} />
-        <Countdown
-          key={`${boardId}-${lastPlacement}`}
-          targetDate={lastPlacement + placementCooldown}
-        />
+        {isAdmin && (
+          <Button
+            variant="outlined"
+            onClick={() => setIsAdminMode(!isAdminMode)}
+          >
+            {isAdminMode ? "Disable Admin Mode" : "Enable Admin Mode"}
+          </Button>
+        )}
+        {!isAdminMode && (
+          <>
+            <HourglassEmptyIcon />
+            <Countdown
+              key={`${boardId}-${lastPlacement}`}
+              targetDate={lastPlacement + placementCooldown}
+            />
+          </>
+        )}
         <IconButton key={lastPlacement} onClick={() => setBaubleOpen(null)}>
           <CloseIcon />
         </IconButton>
@@ -101,6 +123,7 @@ const BaublePanel = ({
           <div className="Canvas">
             {boardWidth && boardHeight && (
               <Board
+                adminMode={isAdminMode}
                 setToastMessage={setToastMessage}
                 width={boardWidth}
                 height={boardHeight}
