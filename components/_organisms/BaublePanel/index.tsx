@@ -8,8 +8,6 @@ import { IconButton, Box, AlertColor } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Countdown from "@/components/_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { UserContext } from "@/components/_atoms/UserProvider";
-import { useContext } from "react";
 import { Button } from "@mui/material";
 interface BaublePanelProps {
   setBaubleOpen: (id: number | null) => void;
