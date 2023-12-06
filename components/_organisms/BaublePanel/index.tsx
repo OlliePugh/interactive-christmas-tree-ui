@@ -8,13 +8,13 @@ import { IconButton, Box, AlertColor } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Countdown from "@/components/_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { UserContext } from "@/components/_atoms/UserProvider";
-import { useContext } from "react";
 import { Button } from "@mui/material";
 interface BaublePanelProps {
   setBaubleOpen: (id: number | null) => void;
-
   boardId: number;
+  isAdmin: boolean;
+  isAdminMode: boolean;
+  setIsAdminMode: (isAdmin: boolean) => void;
   setToastMessage: ({
     message,
     severity,
@@ -28,10 +28,11 @@ const BaublePanel = ({
   setBaubleOpen,
   boardId,
   setToastMessage,
+  isAdmin,
+  isAdminMode,
+  setIsAdminMode,
 }: BaublePanelProps) => {
   // could use an array of refs here to have access to each squares value
-  const { isAdmin } = useContext(UserContext);
-  const [isAdminMode, setIsAdminMode] = useState(false);
   const [{ boardWidth, boardHeight }, setBoardDimensions] = useState({
     boardWidth: null,
     boardHeight: null,
@@ -52,7 +53,7 @@ const BaublePanel = ({
     if (!isAdmin) {
       setIsAdminMode(false);
     }
-  }, [isAdmin]);
+  }, [isAdmin, setIsAdminMode]);
 
   const placeCooldownCheck = () => {
     const now = Date.now();
@@ -114,7 +115,13 @@ const BaublePanel = ({
             />
           </>
         )}
-        <IconButton key={lastPlacement} onClick={() => setBaubleOpen(null)}>
+        <IconButton
+          key={lastPlacement}
+          onClick={() => {
+            setIsAdminMode(false);
+            setBaubleOpen(null);
+          }}
+        >
           <CloseIcon />
         </IconButton>
       </Box>
@@ -124,6 +131,7 @@ const BaublePanel = ({
             {boardWidth && boardHeight && (
               <Board
                 adminMode={isAdminMode}
+                setAdminMode={setIsAdminMode}
                 setToastMessage={setToastMessage}
                 width={boardWidth}
                 height={boardHeight}

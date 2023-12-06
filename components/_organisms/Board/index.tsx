@@ -18,7 +18,6 @@ import {
   writeData,
 } from "@/utils/fb_funcs";
 import axios from "axios";
-import { User } from "firebase/auth";
 import { AlertColor } from "@mui/material";
 import { UserContext } from "@/components/_atoms/UserProvider";
 
@@ -36,6 +35,7 @@ interface BoardProps {
   boardId: number;
   placeCooldownCheck: () => boolean;
   adminMode: boolean;
+  setAdminMode: (adminMode: boolean) => void;
   setToastMessage: ({
     message,
     severity,
@@ -57,6 +57,7 @@ const Board = ({
   placeCooldownCheck,
   setToastMessage,
   adminMode,
+  setAdminMode,
 }: BoardProps) => {
   const { user } = useContext(UserContext);
   const [currentClickPos, setCurrentClickPos] =
