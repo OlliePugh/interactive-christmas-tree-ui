@@ -10,7 +10,6 @@ import {
   useState,
 } from "react";
 import { doc, getDoc } from "firebase/firestore";
-
 interface UserContextPayload {
   user: User | null;
   signIn: () => Promise<void>;
@@ -34,17 +33,24 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       console.error(e);
       return;
     });
-    setUser(result!.user);
+    const newUser = result!.user;
+
+    setUser(newUser);
   }, []);
 
   const signOut = useCallback(async () => {
     await signOut().catch(console.error);
+    window.posthog.reset();
     setUser(null);
   }, []);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (newUser) => {
       if (newUser) {
+        window.posthog.identify(newUser.uid, {
+          email: newUser.email,
+          displayName: newUser.email,
+        });
         setUser(newUser);
         const docRef = doc(firestore, "admins", newUser.uid);
         const docSnap = await getDoc(docRef);

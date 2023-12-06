@@ -1,6 +1,4 @@
 "use client";
-import posthog from "posthog-js";
-import { PostHogProvider } from "posthog-js/react";
 import { ReactNode } from "react";
 
 const iubenda = `
@@ -20,9 +18,9 @@ export default function AnalyticsProvider({
   children: ReactNode;
 }) {
   return (
-    <PostHogProvider client={posthog}>
+    <>
       <div dangerouslySetInnerHTML={{ __html: iubenda }} />
       {children}
-    </PostHogProvider>
+    </>
   );
 }
