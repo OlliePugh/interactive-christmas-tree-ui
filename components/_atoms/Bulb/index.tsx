@@ -37,7 +37,17 @@ const Bulb = ({ sx, id, colour, setColourCallback }: BulbProps) => {
         onClick={() => {
           setPaletteOpen(true);
         }}
-        sx={{ ...sx, opacity: 0.7, zIndex: 5 }}
+        sx={{
+          ...sx,
+          opacity: 0.7,
+          zIndex: 5,
+          cursor: "pointer",
+          transition: "all .2s ease-in-out",
+          "&:hover": {
+            transform: "scale(105%)",
+            opacity: 1,
+          },
+        }}
         display={"flex"}
         flexDirection={"column"}
         position={"absolute"}
