@@ -98,14 +98,14 @@ const Bulbs = ({
     }[];
   }, []);
 
-  const handleBoxClick = (event: any) => {
-    // Get the coordinates relative to the Box element
-    const x = event.nativeEvent.offsetX;
-    const y = event.nativeEvent.offsetY;
+  // const handleBoxClick = (event: any) => {
+  //   // Get the coordinates relative to the Box element
+  //   const x = event.nativeEvent.offsetX;
+  //   const y = event.nativeEvent.offsetY;
 
-    // Use these coordinates as needed
-    console.log("Clicked at coordinates:", { x, y });
-  };
+  //   // Use these coordinates as needed
+  //   console.log("Clicked at coordinates:", { x, y });
+  // };
 
   return (
     <Box
@@ -114,7 +114,7 @@ const Bulbs = ({
       border={"black 1px solid"}
       position="absolute"
       visibility={visible ? "visible" : "hidden"}
-      onClick={handleBoxClick} // Add this line to handle click events on the Box
+      // onClick={handleBoxClick} // Add this line to handle click events on the Box
     >
       {Object.entries(scaledBulbs).map(
         ([_, { x, y, id }]) =>
