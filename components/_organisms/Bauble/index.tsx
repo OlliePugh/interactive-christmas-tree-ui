@@ -10,7 +10,7 @@ interface BaubleProps {
 }
 
 const Bauble = ({ openBauble, id, sx }: BaubleProps) => {
-  const [imgUrl, setImgUrl] = useState("./bauble.png");
+  const [imgUrl, setImgUrl] = useState<string | undefined>();
 
   useEffect(() => {
     const imageRef = ref(storage, `board${id}.jpeg`);
@@ -19,11 +19,26 @@ const Bauble = ({ openBauble, id, sx }: BaubleProps) => {
 
   return (
     <Box
-      sx={{ ...sx, position: "absolute", zIndex: 10 }}
+      sx={{
+        ...sx,
+        position: "absolute",
+        zIndex: 10,
+        transition: "all .2s ease-in-out",
+        "&:hover": {
+          transform: "scale(103%)",
+          opacity: 1,
+        },
+        ...(imgUrl != null && {
+          border: "1px black solid",
+          borderRadius: "5px",
+          overflow: "hidden",
+        }),
+        cursor: "pointer",
+      }}
       onClick={() => openBauble(id)}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img height={60} width={60} alt="Bauble" src={imgUrl} />
+      <img height={60} width={60} alt="Bauble" src={imgUrl || "./bauble.png"} />
     </Box>
   );
 };
