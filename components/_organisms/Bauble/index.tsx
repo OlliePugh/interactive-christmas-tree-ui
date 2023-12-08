@@ -19,13 +19,14 @@ const Bauble = ({ openBauble, id, sx }: BaubleProps) => {
 
   return (
     <Box
+      className={`joyride-bauble-thumbnail-${id}`}
       sx={{
         ...sx,
         position: "absolute",
         zIndex: 10,
         transition: "all .2s ease-in-out",
         "&:hover": {
-          transform: "scale(103%)",
+          transform: "scale(102%)",
           opacity: 1,
         },
         ...(imgUrl != null && {

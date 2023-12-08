@@ -7,12 +7,6 @@ import { connectStorageEmulator, getStorage } from "firebase/storage";
 import { production } from "@/config/config";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
-declare global {
-  interface Window {
-    analyticsEnabled: boolean | undefined;
-  }
-}
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {

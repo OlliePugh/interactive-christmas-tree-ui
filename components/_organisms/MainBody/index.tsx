@@ -11,6 +11,7 @@ import { placementCooldown } from "@/config/config";
 import TreeStream from "../TreeStream";
 import NavigationSphere from "../../_atoms/NavigationCircle";
 import { ToastPayload } from "@/@types/toast";
+import { useJoyride } from "@/components/_atoms/JoyrideProvider";
 
 interface MainBodyProps {
   sx?: SxProps;
@@ -22,6 +23,7 @@ const MainBody = ({ sx }: MainBodyProps) => {
   const [toastOpen, setToastOpen] = useState(false);
   const [baubleOpen, setBaubleOpen] = useState<number | null>(null);
   const [lastBulbPlacement, setLastBulbPlacement] = useState(0);
+  const { update, isInJoyride } = useJoyride();
 
   useEffect(() => {
     if (!!toastMessage) {
@@ -30,7 +32,7 @@ const MainBody = ({ sx }: MainBodyProps) => {
   }, [toastMessage]);
 
   return (
-    <Box sx={{ ...sx, height: "100%" }}>
+    <Box className="joyride-full-app" sx={{ ...sx, height: "100%" }}>
       <BaublePaper
         setBaubleOpen={setBaubleOpen}
         baubleOpen={baubleOpen}
@@ -92,6 +94,7 @@ const MainBody = ({ sx }: MainBodyProps) => {
       </Box>
       <NavigationSphere />
       <TransformWrapper
+        disabled={isInJoyride}
         limitToBounds={false}
         minScale={0.2}
         maxScale={15}
@@ -105,7 +108,13 @@ const MainBody = ({ sx }: MainBodyProps) => {
             height={treeDimensions.height}
             width={treeDimensions.width}
             setToastMessage={setToastMessage}
-            openBauble={setBaubleOpen}
+            openBauble={(value: number | null) => {
+              setBaubleOpen(value);
+              console.log(value);
+              if (value === 3) {
+                update({ baublePressed: true });
+              }
+            }}
             lastPlacement={lastBulbPlacement}
             setLastPlacement={setLastBulbPlacement}
           />

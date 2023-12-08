@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Countdown from "@/components/_atoms/Countdown";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import { Button } from "@mui/material";
+import { useJoyride } from "@/components/_atoms/JoyrideProvider";
 interface BaublePanelProps {
   setBaubleOpen: (id: number | null) => void;
   boardId: number;
@@ -39,7 +40,7 @@ const BaublePanel = ({
   });
   const [loading, setLoading] = useState(true);
   const [lastPlacement, setLastPlacement] = useState(0);
-
+  const { isInJoyride } = useJoyride();
   const canvasListener = useCallback(async () => {
     const metaDataRef = ref(realtime, `board${boardId}/metadata`);
     const result = await get(metaDataRef);
@@ -84,6 +85,7 @@ const BaublePanel = ({
   return (
     <TransformWrapper
       limitToBounds={false}
+      disabled={isInJoyride}
       minScale={0.5}
       maxScale={15}
       initialScale={2}
@@ -91,6 +93,7 @@ const BaublePanel = ({
       initialPositionY={100}
     >
       <Box
+        className="joyride-board-wrapper"
         sx={{
           position: "absolute",
           zIndex: 100,
@@ -118,15 +121,17 @@ const BaublePanel = ({
         <IconButton
           key={lastPlacement}
           onClick={() => {
-            setIsAdminMode(false);
-            setBaubleOpen(null);
+            if (!isInJoyride) {
+              setIsAdminMode(false);
+              setBaubleOpen(null);
+            }
           }}
         >
           <CloseIcon />
         </IconButton>
       </Box>
       <TransformComponent>
-        <div className="Board">
+        <div className="joyride-board-transform">
           <div className="Canvas">
             {boardWidth && boardHeight && (
               <Board

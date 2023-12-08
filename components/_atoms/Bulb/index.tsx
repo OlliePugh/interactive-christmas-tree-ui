@@ -6,6 +6,7 @@ import { fairyLightsColours } from "@/config/palette";
 import { SxProps } from "@mui/system";
 import BulbSvg from "../BulbSvg";
 import SocketSvg from "../SocketSvg";
+import { useJoyride } from "../JoyrideProvider";
 
 interface BulbProps {
   sx: SxProps;
@@ -16,14 +17,22 @@ interface BulbProps {
 
 const Bulb = ({ sx, id, colour, setColourCallback }: BulbProps) => {
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const { update, isInJoyride } = useJoyride();
 
   return (
-    <OutsideClickHandler onOutsideClick={() => setPaletteOpen(false)}>
+    <OutsideClickHandler
+      onOutsideClick={() => {
+        if (!isInJoyride) {
+          setPaletteOpen(false);
+        }
+      }}
+    >
       {paletteOpen && (
         <ColourPicker
           sx={sx}
           changeColour={(colour: string) => {
             setColourCallback(id, colour);
+            update({ lightColourChosen: true });
             setPaletteOpen(false);
           }}
           offset={{
@@ -34,8 +43,10 @@ const Bulb = ({ sx, id, colour, setColourCallback }: BulbProps) => {
         />
       )}
       <Box
+        className={`joyride-bulb-${id}`}
         onClick={() => {
           setPaletteOpen(true);
+          update({ lightPressed: true });
         }}
         sx={{
           ...sx,

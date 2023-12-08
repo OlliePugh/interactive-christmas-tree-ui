@@ -18,6 +18,7 @@ const ColourPicker = ({
   colourPalette,
 }: ColourPickerProps) => (
   <Box
+    className="colourPicker"
     position={"absolute"}
     zIndex={11}
     display={"flex"}
@@ -40,7 +41,7 @@ const ColourPicker = ({
         onClick={() => {
           changeColour(value);
         }}
-        style={{ backgroundColor: value }}
+        style={{ backgroundColor: value, cursor: "pointer" }}
       />
     ))}
   </Box>
