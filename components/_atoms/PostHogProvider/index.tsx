@@ -10,13 +10,14 @@ const posthog = `
 const iubenda = `
 <script type="text/javascript">
 var _iub = _iub || [];
-_iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,"countryDetection":true,"enableFadp":true,"enableLgpd":true,"enableTcf":true,"enableUspr":true,"floatingPreferencesButtonDisplay":"anchored-center-left","googleAdditionalConsentMode":true,"lang":"en","lgpdAppliesGlobally":false,"logLevel":"debug","perPurposeConsent":true,"siteId":2889235,"tcfPurposes":{"2":"consent_only","7":"consent_only","8":"consent_only","9":"consent_only","10":"consent_only"},"whitelabel":false,"cookiePolicyId":33877500, "callback":{ "onConsentGiven":() => window.posthog.opt_in_capturing(),"onConsentRejected":() => window.posthog.opt_out_capturing() }, "banner":{ "acceptButtonDisplay":true,"backgroundOverlay":true,"closeButtonDisplay":false,"customizeButtonDisplay":true,"explicitWithdrawal":true,"listPurposes":true,"logo":null,"position":"float-bottom-center","rejectButtonDisplay":true }};
+_iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,"countryDetection":true,"enableFadp":true,"enableLgpd":true,"enableTcf":true,"enableUspr":true,"floatingPreferencesButtonDisplay":"anchored-center-left","googleAdditionalConsentMode":true,"lang":"en","lgpdAppliesGlobally":false,"perPurposeConsent":true,"siteId":2889235,"tcfPurposes":{"2":"consent_only","7":"consent_only","8":"consent_only","9":"consent_only","10":"consent_only"},"whitelabel":false,"cookiePolicyId":33877500, "callback":{ "onConsentGiven":() => window.posthog.opt_in_capturing(),"onConsentRejected":() => window.posthog.opt_out_capturing() }, "banner":{ "acceptButtonDisplay":true,"backgroundOverlay":true,"closeButtonDisplay":false,"customizeButtonDisplay":true,"explicitWithdrawal":true,"listPurposes":true,"logo":null,"position":"float-bottom-center","rejectButtonDisplay":true }};
 </script>
 <script type="text/javascript" src="//cs.iubenda.com/sync/2889235.js"></script>
 <script type="text/javascript" src="//cdn.iubenda.com/cs/tcf/beta/stub-v2.js"></script>
 <script type="text/javascript" src="//cdn.iubenda.com/cs/tcf/beta/safe-tcf-v2.js"></script>
 <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/beta/stub.js"></script>
-<script type="text/javascript" src="//cdn.iubenda.com/cs/beta/iubenda_cs.js" charset="UTF-8" async></script>`;
+<script type="text/javascript" src="//cdn.iubenda.com/cs/beta/iubenda_cs.js" charset="UTF-8" async></script>
+`;
 
 export default function AnalyticsProvider({
   children,

@@ -77,6 +77,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
         "First things first, you're going to need to log in to make any changes to the tree. All you need is a google account. There is more info about this in the 'What is this' section.",
       disableBeacon: true,
       disableOverlayClose: true,
+      hideFooter: true,
     },
     {
       target: ".joyride-bulb-46",
@@ -133,7 +134,8 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
         setCurrentStep((currentStep) => currentStep + 1);
       switch (currentStep) {
         case STEP_NAMES.LOGIN:
-          if (user != null) {
+          console.log(user);
+          if (user.user != null) {
             progressStage(); // skip the login
           }
           break;
