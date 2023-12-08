@@ -110,7 +110,6 @@ const MainBody = ({ sx }: MainBodyProps) => {
             setToastMessage={setToastMessage}
             openBauble={(value: number | null) => {
               setBaubleOpen(value);
-              console.log(value);
               if (value === 3) {
                 update({ baublePressed: true });
               }

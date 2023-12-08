@@ -39,7 +39,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signOut = useCallback(async () => {
-    await signOut().catch(console.error);
+    await auth.signOut().catch(console.error);
     window.posthog.reset();
     setUser(null);
   }, []);

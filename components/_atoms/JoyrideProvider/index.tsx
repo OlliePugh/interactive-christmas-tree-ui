@@ -134,7 +134,6 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
         setCurrentStep((currentStep) => currentStep + 1);
       switch (currentStep) {
         case STEP_NAMES.LOGIN:
-          console.log(user);
           if (user.user != null) {
             progressStage(); // skip the login
           }
@@ -203,13 +202,12 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
       value={{
         ...observedEvents,
         update,
-        isInJoyride: currentStep < joyrideSteps.length,
+        isInJoyride: currentStep < joyrideSteps.length && !hasCompletedBefore,
       }}
     >
       <JoyRideNoSSR
         callback={onNextStep}
         stepIndex={currentStep}
-        showProgress
         spotlightClicks
         showSkipButton
         run={!hasCompletedBefore}
