@@ -80,7 +80,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
       hideFooter: true,
     },
     {
-      target: ".joyride-bulb-46",
+      target: ".joyride-bulb-48",
       content: "Light",
       disableBeacon: true,
       hideFooter: true,
