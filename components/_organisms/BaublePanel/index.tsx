@@ -85,7 +85,6 @@ const BaublePanel = ({
   return (
     <TransformWrapper
       limitToBounds={false}
-      disabled={isInJoyride}
       minScale={0.5}
       maxScale={15}
       initialScale={2}
