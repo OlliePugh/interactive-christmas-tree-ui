@@ -9,9 +9,10 @@ const NavigationSphere = () => {
     <SpeedDial
       ariaLabel="SpeedDial basic example"
       sx={{
-        position: "absolute",
-        bottom: 32,
-        right: 16,
+        zIndex: 10,
+        position: "fixed",
+        bottom: 20,
+        right: 10,
       }}
       FabProps={{ style: { backgroundColor: "#1976D2" } }}
       icon={<YouTubeSvg height={32} width={32} fill={"white"} />}

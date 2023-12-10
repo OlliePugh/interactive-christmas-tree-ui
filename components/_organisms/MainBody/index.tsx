@@ -33,6 +33,7 @@ const MainBody = ({ sx }: MainBodyProps) => {
 
   return (
     <Box className="joyride-full-app" sx={{ ...sx, height: "100%" }}>
+      <NavigationSphere />
       <BaublePaper
         setBaubleOpen={setBaubleOpen}
         baubleOpen={baubleOpen}
@@ -92,7 +93,6 @@ const MainBody = ({ sx }: MainBodyProps) => {
           targetDate={lastBulbPlacement + placementCooldown}
         />
       </Box>
-      <NavigationSphere />
       <TransformWrapper
         disabled={isInJoyride}
         limitToBounds={false}
