@@ -42,7 +42,7 @@ export const JoyrideContext = createContext<JoyrideContextPayload>({
   isInJoyride: true,
 });
 
-const STEP_NAMES = {
+const STEP_NAMES: { [key: string]: number } = {
   WELCOME: 0,
   LOGIN: 1,
   PRESS_LIGHT: 2,
@@ -52,6 +52,9 @@ const STEP_NAMES = {
   PRESS_BOARD: 6,
   PRESS_BOARD_COLOUR: 7,
 };
+
+const numberToStep = (index: number) =>
+  Object.keys(STEP_NAMES).find((key) => STEP_NAMES[key] === index);
 
 const JoyrideProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -131,6 +134,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const completeJoyride = () => {
+    window.posthog.capture("joyride_complete");
     localStorage.setItem("joyride-done", "true");
   };
 
@@ -140,8 +144,13 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
         completeJoyride();
       }
 
-      const progressStage = () =>
+      const progressStage = () => {
+        window.posthog.capture("joyride_step_change", {
+          current_step: numberToStep(currentStep),
+          new_step: numberToStep(currentStep + 1),
+        });
         setCurrentStep((currentStep) => currentStep + 1);
+      };
       switch (currentStep) {
         case STEP_NAMES.LOGIN:
           if (user.user != null) {
@@ -209,6 +218,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
       attemptProgress(true);
     }
     if (action == ACTIONS.CLOSE) {
+      window.posthog.capture("joyride_closed");
       completeJoyride();
       setCurrentStep(1000); // jankkkk
     }
