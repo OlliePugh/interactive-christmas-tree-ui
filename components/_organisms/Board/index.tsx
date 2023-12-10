@@ -20,6 +20,7 @@ import {
 import axios from "axios";
 import { AlertColor } from "@mui/material";
 import { UserContext } from "@/components/_atoms/UserProvider";
+import { useJoyride } from "@/components/_atoms/JoyrideProvider";
 
 const zeroPad = (num: string, places: number) =>
   String(num).padStart(places, "0");
@@ -68,6 +69,7 @@ const Board = ({
   const [adminModeSelection, setAdminModeSelection] = useState<ClickPosition[]>(
     []
   );
+  const { update, isInJoyride } = useJoyride();
 
   const setCurrentOpenPixel = useCallback(({ col, row }: ClickPosition) => {
     const canvas = canvasRef.current!;
@@ -125,6 +127,7 @@ const Board = ({
     const id = width * currentClickPos!.row + currentClickPos!.col;
     currentOpenPixel.current = null;
     setPixelColour(currentClickPos!.row, currentClickPos!.col, colour);
+    update({ baubleColourChosen: true });
     try {
       writeData(functions, {
         id,
@@ -276,6 +279,7 @@ const Board = ({
       col: Math.floor(((event.clientX - rect.left) * scaleX - 1) / 10), // scale mouse coordinates after they have
       row: Math.floor(((event.clientY - rect.top) * scaleY - 1) / 10), // -1 to take into account the 1px border
     });
+    update({ boardPressed: true });
   };
   return (
     <>
@@ -285,7 +289,13 @@ const Board = ({
         </div>
       )}
       {currentClickPos && (
-        <OutsideClickHandler onOutsideClick={() => setCurrentClickPos(null)}>
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            if (!isInJoyride) {
+              setCurrentClickPos(null);
+            }
+          }}
+        >
           <ColourPicker
             sx={{
               left: `${currentClickPos.col * 10}px`,
@@ -305,6 +315,7 @@ const Board = ({
         </OutsideClickHandler>
       )}
       <canvas
+        className="board"
         onClick={
           user
             ? (event) => canvasClick(event)
@@ -318,6 +329,7 @@ const Board = ({
           border: "1px solid black",
           imageRendering: "pixelated",
           display: loaded ? "block" : "none",
+          cursor: "pointer",
         }}
         ref={canvasRef}
       />

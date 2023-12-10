@@ -33,7 +33,8 @@ const writeData = async (
 ) => {
   const changeSquare = httpsCallable(functions, "changeSquare");
   const result = await changeSquare(data);
-  window.posthog.capture("change_square", data);
+  const posthogData = { ...data, board_id: data.boardId };
+  window.posthog.capture("change_square", posthogData);
   console.log(result);
 };
 const writeBulk = async (

@@ -10,12 +10,13 @@ import FaqPage from "@/components/_organisms/FaqPage";
 import { colours } from "@/config/palette";
 import UserProvider from "@/components/_atoms/UserProvider";
 import AnalyticsProvider from "@/components/_atoms/PostHogProvider";
+import JoyrideProvider from "@/components/_atoms/JoyrideProvider";
 
-const App = () => {
-  return (
-    <AnalyticsProvider>
-      <ThemeProvider theme={theme}>
-        <UserProvider>
+const App = () => (
+  <AnalyticsProvider>
+    <ThemeProvider theme={theme}>
+      <UserProvider>
+        <JoyrideProvider>
           <Box
             sx={{ display: "flex", flexDirection: "column", height: "100%" }}
           >
@@ -38,12 +39,12 @@ const App = () => {
               </Typography>
             </Box>
           </Box>
-        </UserProvider>
-        <FaqPage />
-        <Footer />
-      </ThemeProvider>
-    </AnalyticsProvider>
-  );
-};
+        </JoyrideProvider>
+      </UserProvider>
+      <FaqPage />
+      <Footer />
+    </ThemeProvider>
+  </AnalyticsProvider>
+);
 
 export default App;

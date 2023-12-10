@@ -4,6 +4,7 @@ import { Paper } from "@mui/material";
 import { ToastPayload } from "@/@types/toast";
 import { UserContext } from "@/components/_atoms/UserProvider";
 import { useState, useContext } from "react";
+import { useJoyride } from "@/components/_atoms/JoyrideProvider";
 
 interface BaublePaper {
   setBaubleOpen: (id: number | null) => void;
@@ -20,10 +21,11 @@ const BaublePaper = ({
 }: BaublePaper) => {
   const { isAdmin } = useContext(UserContext);
   const [isAdminMode, setIsAdminMode] = useState(false);
+  const { isInJoyride } = useJoyride();
   return (
     <OutsideClickHandler
       onOutsideClick={() => {
-        if (baubleOpen === boardId) {
+        if (baubleOpen === boardId && !isInJoyride) {
           setBaubleOpen(null);
           setIsAdminMode(false);
         }

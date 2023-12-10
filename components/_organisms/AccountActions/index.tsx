@@ -10,7 +10,12 @@ const AccountActions = () => {
       {user ? (
         <LoggedInHeader signOutCallback={signOut} userData={user} />
       ) : (
-        <Link component="button" onClick={signIn} underline="none">
+        <Link
+          component="button"
+          onClick={signIn}
+          underline="none"
+          className="joyride-login"
+        >
           <Typography sx={{ display: "inline", color: "white" }}>
             Login
           </Typography>

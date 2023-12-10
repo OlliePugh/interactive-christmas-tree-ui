@@ -9,6 +9,7 @@ interface LoggedInHeaderProps {
 const LoggedInHeader = ({ signOutCallback, userData }: LoggedInHeaderProps) => {
   return (
     <Box
+      className="joyride-login"
       display={"flex"}
       flexDirection={"column"}
       justifyContent="space-evenly"

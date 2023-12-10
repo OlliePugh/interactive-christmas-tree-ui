@@ -33,6 +33,25 @@ const VideoStream = ({
   }, [playing]);
 
   useEffect(() => {
+    // TODO use this to trigger pausing and starting the stream
+    const visibilityChangeCallback = () => {
+      if (!playing) return; // if not playing dont change anything
+
+      if (document.hidden) {
+        stop(); // if now hidden stop the stream
+      } else {
+        watch(); // if no longe hidden restart the stream
+      }
+    };
+    document.addEventListener("visibilitychange", visibilityChangeCallback);
+    return () =>
+      document.removeEventListener(
+        "visibilitychange",
+        visibilityChangeCallback
+      );
+  }, [playing, stop, watch]);
+
+  useEffect(() => {
     if (remoteStream != null && videoRef.current) {
       videoRef.current.srcObject = remoteStream;
       videoRef.current.play();
