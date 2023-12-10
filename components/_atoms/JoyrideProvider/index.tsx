@@ -7,11 +7,11 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import { ACTIONS, CallBackProps, EVENTS, Step } from "react-joyride";
+import { ACTIONS, CallBackProps, EVENTS, LIFECYCLE, Step } from "react-joyride";
 import { UserContext } from "../UserProvider";
+import { colours } from "@/config/palette";
 
 const JoyRideNoSSR = dynamic(() => import("react-joyride"), { ssr: false });
 
@@ -47,9 +47,10 @@ const STEP_NAMES = {
   LOGIN: 1,
   PRESS_LIGHT: 2,
   PRESS_LIGHT_COLOUR: 3,
-  PRESS_BAUBLE: 4,
-  PRESS_BOARD: 5,
-  PRESS_BOARD_COLOUR: 6,
+  OBSERVE_LIGHT: 4,
+  PRESS_BAUBLE: 5,
+  PRESS_BOARD: 6,
+  PRESS_BOARD_COLOUR: 7,
 };
 
 const JoyrideProvider = ({ children }: { children: ReactNode }) => {
@@ -65,8 +66,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
 
   const joyrideSteps: Step[] = [
     {
-      content:
-        "Looks like its your first time here! Do you want to get a have quick tutorial",
+      content: "Welcome! This is a quick tour of how to use the tree!",
       disableBeacon: true,
       placement: "center",
       target: "#body",
@@ -81,35 +81,44 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
     },
     {
       target: ".joyride-bulb-48",
-      content: "Light",
+      content:
+        "Press this light bulb to change the colour of a bulb on the tree!",
       disableBeacon: true,
       hideFooter: true,
       disableOverlayClose: true,
     },
     {
       target: ".colourPicker",
-      content: "Pick Colour",
+      content: "Pick the colour you want!",
       disableBeacon: true,
       hideFooter: true,
       disableOverlayClose: true,
     },
     {
+      target: ".joyride-bulb-48",
+      content:
+        "In a second or two the bulb will change to the colour you chose!",
+      disableBeacon: true,
+      disableOverlayClose: true,
+    },
+    {
       target: ".joyride-bauble-thumbnail-3",
-      content: "Bauble",
+      content:
+        "Click on the ornament to begin drawing pixel art on the ornaments",
       disableBeacon: true,
       hideFooter: true,
       disableOverlayClose: true,
     },
     {
       target: ".joyride-full-app",
-      content: "Click on the board",
+      content: "Click on the board to select a pixel",
       disableBeacon: true,
       hideFooter: true,
       disableOverlayClose: true,
     },
     {
       target: ".colourPicker",
-      content: "Pick Colour",
+      content: "Pick the colour you want!",
       disableBeacon: true,
       hideFooter: true,
       disableOverlayClose: true,
@@ -130,6 +139,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
       if (currentStep === joyrideSteps.length) {
         completeJoyride();
       }
+
       const progressStage = () =>
         setCurrentStep((currentStep) => currentStep + 1);
       switch (currentStep) {
@@ -159,6 +169,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
           if (observedEvents.boardPressed) {
             progressStage();
           }
+          break;
         }
         case STEP_NAMES.PRESS_BOARD: {
           if (observedEvents.baubleColourChosen) {
@@ -187,8 +198,14 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
     [currentStep, joyrideSteps.length, observedEvents, user, attemptProgress]
   );
 
-  const onNextStep = ({ action, type }: CallBackProps) => {
-    if (action === ACTIONS.NEXT && type === EVENTS.STEP_AFTER) {
+  const onNextStep = (props: CallBackProps) => {
+    const unmanagedSteps = [STEP_NAMES.WELCOME, STEP_NAMES.OBSERVE_LIGHT];
+    const { action, type, index } = props;
+    if (
+      action === ACTIONS.NEXT &&
+      type === EVENTS.STEP_AFTER &&
+      unmanagedSteps.includes(index)
+    ) {
       attemptProgress(true);
     }
     if (action == ACTIONS.CLOSE) {
@@ -209,10 +226,16 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
         callback={onNextStep}
         stepIndex={currentStep}
         spotlightClicks
-        showSkipButton
+        showSkipButton={false}
         run={!hasCompletedBefore}
         steps={joyrideSteps}
         continuous
+        hideBackButton
+        styles={{
+          options: {
+            primaryColor: colours.PRIMARY1,
+          },
+        }}
       />
       {children}
     </JoyrideContext.Provider>
