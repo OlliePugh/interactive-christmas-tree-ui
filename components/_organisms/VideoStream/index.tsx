@@ -65,6 +65,22 @@ const VideoStream = ({
     }
   }, [remoteStream]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (playing) {
+        try {
+          videoRef.current?.play();
+        } catch {
+          console.log("failed to start video feed on timer");
+        }
+      }
+    }, 1000); // im not proud of this
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [playing]);
+
   return (
     <video
       preload="metadata"
