@@ -105,8 +105,11 @@ const MainBody = ({ sx }: MainBodyProps) => {
           {projectClosed ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              height={1280}
-              width={720}
+              style={{
+                height: treeDimensions.height,
+                width: treeDimensions.width,
+                maxWidth: "initial",
+              }}
               src="tree.jpeg"
               alt="A still image of the interactive christmas tree"
             />
