@@ -1,7 +1,7 @@
 import { Box, SxProps } from "@mui/system";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Bulbs from "../Bulbs";
-import { treeDimensions } from "@/config/config";
+import { projectClosed, treeDimensions } from "@/config/config";
 import { useEffect, useState } from "react";
 import { Button, Snackbar, Alert, AlertColor } from "@mui/material";
 import BaublePaper from "../BaublePaper";
@@ -102,7 +102,21 @@ const MainBody = ({ sx }: MainBodyProps) => {
         centerZoomedOut={false}
       >
         <TransformComponent>
-          <TreeStream />
+          {projectClosed ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              style={{
+                height: treeDimensions.height,
+                width: treeDimensions.width,
+                maxWidth: "initial",
+              }}
+              src="tree.jpeg"
+              alt="A still image of the interactive christmas tree"
+            />
+          ) : (
+            <TreeStream />
+          )}
+
           <Bulbs
             visible={virtualBulbsVisible}
             height={treeDimensions.height}

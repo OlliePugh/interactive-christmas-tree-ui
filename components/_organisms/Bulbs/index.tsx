@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import WireCanvas from "../../_atoms/WireCanvas";
 import Bulb from "../../_atoms/Bulb";
 import lightConfig from "@/config/light_config.json";
-import { lightAdjustment } from "@/config/config";
+import { lightAdjustment, projectClosed } from "@/config/config";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import realtime from "@/config/fb_config";
 import { get, ref, onChildChanged } from "firebase/database";
@@ -42,6 +42,7 @@ const Bulbs = ({
       const result = await get(lightsRef);
       const lights = result.val();
       setBulbsColours(lights);
+      if (projectClosed) return;
       const dbRef = ref(realtime, `lights/data`);
       onChildChanged(dbRef, (snapshot) => {
         const lightId = Number(snapshot.key);
@@ -59,6 +60,14 @@ const Bulbs = ({
   };
 
   const broadcastBulbColour = (id: number, colour: string) => {
+    if (projectClosed) {
+      setToastMessage({
+        message: "The project is now read-only!",
+        severity: "error",
+      });
+      return;
+    }
+
     if (!placeCooldownCheck()) {
       // cooldown not finished
       return;
@@ -68,6 +77,9 @@ const Bulbs = ({
   };
 
   const placeCooldownCheck = () => {
+    if (projectClosed) {
+      return;
+    }
     const now = Date.now();
     if (now - lastPlacement > placementCooldown) {
       setLastPlacement(now);
@@ -132,8 +144,9 @@ const Bulbs = ({
                   ? broadcastBulbColour
                   : () => {
                       setToastMessage({
-                        message:
-                          "You need to be logged in to change the lights!",
+                        message: projectClosed
+                          ? "The project is now read-only!"
+                          : "You need to be logged in to change the lights!",
                         severity: "error",
                       });
                     }

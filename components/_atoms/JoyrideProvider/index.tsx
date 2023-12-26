@@ -12,6 +12,7 @@ import {
 import { ACTIONS, CallBackProps, EVENTS, LIFECYCLE, Step } from "react-joyride";
 import { UserContext } from "../UserProvider";
 import { colours } from "@/config/palette";
+import { projectClosed } from "@/config/config";
 
 const JoyRideNoSSR = dynamic(() => import("react-joyride"), { ssr: false });
 
@@ -237,7 +238,7 @@ const JoyrideProvider = ({ children }: { children: ReactNode }) => {
         stepIndex={currentStep}
         spotlightClicks
         showSkipButton={false}
-        run={!hasCompletedBefore}
+        run={!projectClosed && !hasCompletedBefore}
         steps={joyrideSteps}
         continuous
         hideBackButton
