@@ -20,7 +20,16 @@ const VideoStream = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const { watch, stop, remoteStream } = useJanus({
     url: serverAddress,
-    connectionOptions: { keepalive: true },
+    connectionOptions: {
+      keepalive: true,
+      iceServers: [
+        {
+          urls: "turn:stream.ollieq.co.uk:3478",
+          username: "rwg",
+          credential: "rwg-temp",
+        },
+      ],
+    },
     streamId,
   });
 

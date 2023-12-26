@@ -21,6 +21,7 @@ import axios from "axios";
 import { AlertColor } from "@mui/material";
 import { UserContext } from "@/components/_atoms/UserProvider";
 import { useJoyride } from "@/components/_atoms/JoyrideProvider";
+import { projectClosed } from "@/config/config";
 
 const zeroPad = (num: string, places: number) =>
   String(num).padStart(places, "0");
@@ -249,6 +250,7 @@ const Board = ({
       const result = await axios.get(url, { responseType: "arraybuffer" });
 
       fillEntireBoard(new Uint8Array(result.data));
+      if (projectClosed) return;
       const recentChanges = await getBaubleRecentChanges(boardId); // get changes since the BMP was created
       recentChanges.forEach((doc) => {
         const data = doc.data();
@@ -268,6 +270,13 @@ const Board = ({
   }, [boardId, fillEntireBoard, height, width]);
 
   const canvasClick = (event: MouseEvent) => {
+    if (projectClosed) {
+      setToastMessage({
+        message: "The project is now read-only!",
+        severity: "error",
+      });
+      return;
+    }
     if (canvasRef.current == null) {
       console.error("canvas ref is undefined");
       return;

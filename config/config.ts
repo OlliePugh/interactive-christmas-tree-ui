@@ -20,3 +20,5 @@ export const lightAdjustment = {
 
 export const hiddenBulbs: number[] = [];
 export const placementCooldown = 3_000;
+
+export const projectClosed = true;
